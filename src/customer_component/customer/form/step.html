@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-lg-6">
+    <md-content class="md-no-momentum">
+      <h3> Enter The Tin number </h1>
+        <md-input-container class="md-icon-float md-block">
+          <label>Tin Number</label>
+          <input ng-model="tin" type="text">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="index.getTin(tin)" ng-disabled="index.tin">Submit</md-button>
+        <md-checkbox ng-model="checkbox" ng-change="index.tin= !index.tin" aria-label="Checkbox 1">
+            I Don't Have a Fucking TIn
+          </md-checkbox>
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="(key,value) in index.tinDetail">
+              <td>{{key}}</td>
+              <td>{{value}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div class="col-lg-6">
+
+      <md-content class="md-no-momentum">
+        <h3> Enter The PanCard number </h1>
+
+        <md-input-container class="md-icon-float md-block">
+          <label>Pan Number</label>
+          <input ng-model="pan" type="text">
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block">
+          <label>Captcha Code</label>
+          <input ng-model="captchaCode" type="text">
+        </md-input-container>
+
+        <md-button class="md-raised md-primary" ng-click="index.getpan(pan,captchaCode)" ng-disabled="false">Submit</md-button>
+        <img ng-src="{{index.captcha_path}}" />
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="(key,value) in index.panDetail">
+              <td>{{key}}</td>
+              <td>{{value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </md-content>
+    </div>
+  </div>
+  <button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep()">
+    <span class="fa fa-chevron-left"></sspan> Previous
+  </button>
+  <button ng-disabled="$isLast() || !(index.tin && index.pan || 1)" class="btn btn-success pull-right" ng-click="$nextStep();index.getCaptcha();index.step_states_increase();">
+    Next
+    <span class="fa fa-chevron-right"></span>
+  </button>

@@ -1,0 +1,8 @@
+<div class="continer" >
+  <div class="row" >
+    <div class="col-lg-{{12/index.documents.length}}" ng-repeat="x in index.documents">
+      <lf-ng-md-file-input multiple lf-files="doc.files" lf-browse-label="Search" lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop {{x}}" drag preview></lf-ng-md-file-input>
+      <button class="btn btn-success center-block" ng-click="index.upload();">submit</button>
+    </div>
+  </div>
+</div>

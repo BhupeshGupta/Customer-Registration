@@ -8,5 +8,5 @@ export default function welcomeDirective() {
     controller: WelcomeController,
     controllerAs: 'welcome',
     template: require('./welcome.html'),
-  };
+  }
 }

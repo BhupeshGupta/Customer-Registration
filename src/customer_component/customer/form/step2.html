@@ -1,0 +1,30 @@
+<md-input-container class="md-block">
+  <label>Enter Your Service Tax number</label>
+  <input ng-model="serviceTax">
+</md-input-container>
+<div class="row">
+  <div class="col-lg-6">
+    <md-input-container class="md-block">
+      <label>Enter Your Excise Number</label>
+      <input ng-model="excise_number">
+    </md-input-container>
+  </div>
+  <div class="col-lg-6">
+    <md-input-container class="md-block">
+      <label>Enter Captcha</label>
+      <input ng-model="captcha">
+    </md-input-container>
+  </div>
+</div>
+
+<img ng-src="{{index.captcha_path1}}" />
+<br>
+<md-button class="md-raised md-primary" ng-click="index.getExcise(excise_number,captcha, serviceTax)">Submit</md-button>
+ <br>
+<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();index.step_states_decrease();">
+  <span class="fa fa-chevron-left"></sspan> Previous
+</button>
+<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.step_states_increase();">
+  Next
+  <span class="fa fa-chevron-right"></span>
+</button>

@@ -1,0 +1,68 @@
+{{index.state}}
+
+
+<div class="container">
+</md-content>
+<md-content layout-padding>
+  <div>
+    <form name="userForm">
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Address Title</label>
+          <input ng-model="user.firstName">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Billing </label>
+            <md-select ng-model="user.state">
+              <md-option ng-repeat="value in index.address_type" value="{{value.abbrev}}">
+                {{value.abbrev}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </md-input-container>
+      </div>
+      <md-input-container class="md-block">
+        <label>Address</label>
+        <input ng-model="user.address">
+      </md-input-container>
+      <md-input-container md-no-float class="md-block">
+        <input ng-model="user.address2" placeholder="Address 2">
+      </md-input-container>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>City</label>
+          <input ng-model="user.city">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>State</label>
+          <md-select ng-model="user.state">
+            <md-option ng-repeat="state in index.states" value="{{state.abbrev}}">
+              {{state.abbrev}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Postal Code</label>
+          <input name="postalCode" ng-model="user.postalCode" placeholder="12345" required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+          <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">You must supply a postal code.</div>
+            <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+      <md-input-container md-no-float class="md-block">
+        <input ng-model="user.address2" placeholder="Country">
+      </md-input-container>
+    </form>
+  </div>
+</md-content>
+</div>
+<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();index.step_states_decrease();">
+  <span class="fa fa-chevron-left"></sspan> Previous
+</button>
+<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.getCaptcha();index.step_states_increase();">
+  Next
+  <span class="fa fa-chevron-right"></span>
+</button>
