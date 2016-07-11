@@ -5,15 +5,15 @@ var step3 = require("./form/step3.html");
 
 export default class IndexController {
 
-  constructor($http, $scope, Uploader) {
+  constructor($http, FileUploader) {
     this.tin = false;
     this.pan = false;
     this.$http = $http;
-    this.$scope = $scope;
     this.stage = 0;
     this.documents = [];
     this.getCaptcha();
-    this.upload = Uploader.logit;
+    this.uploader = new FileUploader();
+
     this.address_type = ('Billing Shipping Office Warehouse').split(' ').map(function(state) {
       return {
         abbrev: state
@@ -40,7 +40,6 @@ export default class IndexController {
 
   }
 
-
   getTin(tin) {
     this.$http.get('http://localhost:9005/tin', {
         params: {
@@ -49,10 +48,9 @@ export default class IndexController {
       })
       .then(data => {
         this.tinDetail = data.data;
-        if (this.tinDetail)
-        {
+        if (this.tinDetail) {
           this.tin = true;
-          this.documents.push("tin");
+          this.documents.push("tinDetail");
         }
       })
       .catch(error => {
@@ -92,12 +90,15 @@ export default class IndexController {
       })
       .then(data => {
         this.panDetail = data.data;
-        if (this.panDetail)
+        if (this.panDetail) {
           this.pan = true;
-          this.documents.push("pan");
+          this.documents.push("panDetail");
+        }
       })
       .catch(error => {});
   }
+
+
 
   step_states_increase() {
     ++this.stage;
@@ -118,9 +119,9 @@ export default class IndexController {
     }).then(data => {
       this.exciseDetails = data.data;
       if (this.exciseDetails.excise)
-      this.documents.push("excise");
+        this.documents.push("exciseDetails.excise");
       if (this.exciseDetails.service)
-      this.documents.push("service");
+        this.documents.push("exciseDetails.service");
       console.log(this.documents);
     }).catch(error => {
       console.log(error);
