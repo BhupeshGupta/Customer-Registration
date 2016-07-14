@@ -6,8 +6,8 @@ var step3 = require("./form/step3.html");
 export default class IndexController {
 
   constructor($http, FileUploader) {
-    this.tin = false;
-    this.pan = false;
+    this.istin = false;
+    this.ispan = false;
     this.$http = $http;
     this.stage = 0;
     this.documents = [];
@@ -40,23 +40,6 @@ export default class IndexController {
 
   }
 
-  getTin(tin) {
-    this.$http.get('http://localhost:9005/tin', {
-        params: {
-          'tin_number': tin
-        }
-      })
-      .then(data => {
-        this.tinDetail = data.data;
-        if (this.tinDetail) {
-          this.tin = true;
-          this.documents.push("tinDetail");
-        }
-      })
-      .catch(error => {
-        alert("fukcer call the admin bitch");
-      });
-  }
   getCaptcha() {
     let vm = this;
     if (this.stage == 0) {
@@ -81,6 +64,27 @@ export default class IndexController {
 
   }
 
+  getTin(tin) {
+    this.$http.get('http://localhost:9005/tin', {
+        params: {
+          'tin_number': tin
+        }
+      })
+      .then(data => {
+        this.tin_Details = data.data;
+        if (this.tin_Details) {
+          this.istin = true;
+          this.tin_Details.doctype = "tin";
+          this.tin_Details.number = tin;
+          this.documents.push("tin");
+
+        }
+      })
+      .catch(error => {
+        alert("fukcer call the admin bitch");
+      });
+  }
+
   getpan(pan, captchaCode) {
     this.$http.post('http://localhost:9005/getPanInfo', {
         'token': this.token,
@@ -89,25 +93,18 @@ export default class IndexController {
 
       })
       .then(data => {
-        this.panDetail = data.data;
-        if (this.panDetail) {
-          this.pan = true;
-          this.documents.push("panDetail");
+        this.pan_Details = data.data;
+        if (this.pan_Details) {
+          this.ispan = true;
+          this.documents.push("pan");
+          this.pan_Details.doctype = "pan";
+          this.pan_Details.number = pan;
+          console.log(this.pan_Details);
         }
       })
       .catch(error => {});
   }
 
-
-
-  step_states_increase() {
-    ++this.stage;
-    console.log(this.stage);
-  }
-  step_states_decrease() {
-    --this.stage;
-    console.log(this.stage);
-  }
 
   getExcise(exciseNumber, captchaCode, serviceTax) {
     this.$http.post('http://localhost:9005/getexciseinfo', {
@@ -117,14 +114,33 @@ export default class IndexController {
       'serviceTax': serviceTax
 
     }).then(data => {
-      this.exciseDetails = data.data;
-      if (this.exciseDetails.excise)
-        this.documents.push("exciseDetails.excise");
-      if (this.exciseDetails.service)
-        this.documents.push("exciseDetails.service");
-      console.log(this.documents);
+      this.Details = data.data;
+      if (this.Details.excise)
+      {
+        console.log(this.Details.excise);
+        this.excise_Details = this.Details.excise;
+        this.excise_Details.doctype = "excise";
+        this.excise_Details.number = exciseNumber;
+        this.documents.push("excise");
+      }
+      if (this.Details.service){
+        this.service_tax_Details = this.Details.service;
+        this.service_tax_Details.doctype = "service_tax";
+        this.service_tax_Details.number = serviceTax;
+        this.documents.push("service_tax");
+      }
     }).catch(error => {
       console.log(error);
     });
+  }
+
+
+  step_states_increase() {
+    ++this.stage;
+    console.log(this.stage);
+  }
+  step_states_decrease() {
+    --this.stage;
+    console.log(this.stage);
   }
 }

@@ -1,7 +1,7 @@
 <div class="continer">
   <div class="row" >
       <div class="col-lg-{{12/index.documents.length}}" ng-repeat = "x in index.documents">
-        <div nv-file-drop="" uploader="index.uploader" options="{ url: 'http://localhost:9005/upload', formData: [index.{{x}}] }">
+        <div nv-file-drop="" uploader="index.uploader" options="{ url: 'http://localhost:9005/upload', formData: [index.{{x}}_Details] }">
           <div nv-file-over="" uploader="index.uploader" over-class="another-file-over-class" class="well my-drop-zone" multiple>
             Drag and Drop {{x}} files Here
           </div>
@@ -59,7 +59,7 @@
     <div>
       Queue progress:
       <div class="progress" style="">
-        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+        <div class="progress-bar" role="progressbar" ng-style="{ 'width': index.uploader.progress + '%' }"></div>
       </div>
     </div>
     <button type="button" class="btn btn-success btn-s" ng-click="index.uploader.uploadAll()" ng-disabled="!index.uploader.getNotUploadedItems().length">

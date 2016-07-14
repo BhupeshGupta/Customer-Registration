@@ -12,7 +12,7 @@
           </md-checkbox>
         <table class="table">
           <tbody>
-            <tr ng-repeat="(key,value) in index.tinDetail">
+            <tr ng-repeat="(key,value) in index.tin_Details">
               <td>{{key}}</td>
               <td>{{value}}</td>
             </tr>
@@ -38,7 +38,7 @@
         <img ng-src="{{index.captcha_path}}" />
         <table class="table">
           <tbody>
-            <tr ng-repeat="(key,value) in index.panDetail">
+            <tr ng-repeat="(key,value) in index.pan_Details">
               <td>{{key}}</td>
               <td>{{value}}</td>
             </tr>
@@ -50,7 +50,7 @@
   <button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep()">
     <span class="fa fa-chevron-left"></sspan> Previous
   </button>
-  <button ng-disabled="$isLast() || !(index.tin && index.pan)" class="btn btn-success pull-right" ng-click="$nextStep();index.getCaptcha();index.step_states_increase();">
+  <button ng-disabled="$isLast() || !(index.tin && index.pan || 1)" class="btn btn-success pull-right" ng-click="$nextStep();index.getCaptcha();index.step_states_increase();">
     Next
     <span class="fa fa-chevron-right"></span>
   </button>
