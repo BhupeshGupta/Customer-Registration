@@ -1,12 +1,13 @@
 <div class="continer">
-  <div class="row" >
-      <div class="col-lg-{{12/index.documents.length}}" ng-repeat = "x in index.documents">
-        <div nv-file-drop="" uploader="index.uploader" options="{ url: 'http://localhost:9005/upload', formData: [index.{{x}}_Details] }">
-          <div nv-file-over="" uploader="index.uploader" over-class="another-file-over-class" class="well my-drop-zone" multiple>
-            Drag and Drop {{x}} files Here
-          </div>
+  <div class="row">
+    <div class="col-lg-{{12/index.documents.length}}" ng-repeat="x in index.documents">
+      <div nv-file-drop="" uploader="index.uploader" options="{ url: 'http://localhost:9005/upload', formData: [index.{{x}}_Details], onSuccess: index.response}">
+        <div nv-file-over="" uploader="index.uploader" over-class="another-file-over-class" class="well my-drop-zone">
+
+          Drag and Drop {{x}} files Here
         </div>
       </div>
+    </div>
   </div>
   <table class="table">
     <thead>
@@ -76,10 +77,10 @@
 
 
 
-  <button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();index.step_states_decrease();">
+  <button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();">
     <span class="fa fa-chevron-left"></span> Previous
   </button>
-  <button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.step_states_increase();">
+  <button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.final_submit();">
     Next
     <span class="fa fa-chevron-right"></span>
   </button>

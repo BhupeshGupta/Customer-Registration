@@ -2,6 +2,8 @@ var step = require("./form/step.html");
 var step1 = require("./form/step1.html");
 var step2 = require("./form/step2.html");
 var step3 = require("./form/step3.html");
+var step4 = require("./form/step4.html");
+
 
 export default class IndexController {
 
@@ -11,9 +13,9 @@ export default class IndexController {
     this.$http = $http;
     this.stage = 0;
     this.documents = [];
+    this.full_data = {};
     this.getCaptcha();
     this.uploader = new FileUploader();
-
     this.address_type = ('Billing Shipping Office Warehouse').split(' ').map(function(state) {
       return {
         abbrev: state
@@ -36,31 +38,33 @@ export default class IndexController {
     }, {
       template: step3,
       title: 'Get the source'
+    }, {
+      template: step4,
+      title: 'Get the source'
     }];
+
+    this.response = angular.bind(this, this.response);
 
   }
 
   getCaptcha() {
     let vm = this;
-    if (this.stage == 0) {
-      this.$http.get('http://localhost:9005/pan')
-        .then(data => {
-          this.token = data.data.token,
-            vm.captcha_path = 'http://localhost:9005/captcha/' + data.data.captcha_path
-        })
-        .catch(error => {
-          alert("there was an error. Kindly visit Administrator");
-        });
-    } else if (this.stage) {
-      this.$http.get('http://localhost:9005/excise')
-        .then(data => {
-          vm.captcha_path1 = 'http://localhost:9005/captcha/' + data.data.captcha_path,
-            this.token1 = data.data.token
-        })
-        .catch(error => {
-          console.log("there was an error. Kindly visit Administrator");
-        });
-    }
+    this.$http.get('http://localhost:9005/pan')
+      .then(data => {
+        this.token = data.data.token,
+          vm.captcha_path = 'http://localhost:9005/captcha/' + data.data.captcha_path
+      })
+      .catch(error => {
+        alert("there was an error. Kindly visit Administrator");
+      });
+    this.$http.get('http://localhost:9005/excise')
+      .then(data => {
+        vm.captcha_path1 = 'http://localhost:9005/captcha/' + data.data.captcha_path,
+          this.token1 = data.data.token
+      })
+      .catch(error => {
+        console.log("there was an error. Kindly visit Administrator");
+      });
 
   }
 
@@ -86,6 +90,7 @@ export default class IndexController {
   }
 
   getpan(pan, captchaCode) {
+    let vm = this;
     this.$http.post('http://localhost:9005/getPanInfo', {
         'token': this.token,
         'captcha': captchaCode,
@@ -94,12 +99,11 @@ export default class IndexController {
       })
       .then(data => {
         this.pan_Details = data.data;
-        if (this.pan_Details) {
+        if (vm.pan_Details) {
           this.ispan = true;
           this.documents.push("pan");
           this.pan_Details.doctype = "pan";
           this.pan_Details.number = pan;
-          console.log(this.pan_Details);
         }
       })
       .catch(error => {});
@@ -115,15 +119,14 @@ export default class IndexController {
 
     }).then(data => {
       this.Details = data.data;
-      if (this.Details.excise)
-      {
+      if (this.Details.excise) {
         console.log(this.Details.excise);
         this.excise_Details = this.Details.excise;
         this.excise_Details.doctype = "excise";
         this.excise_Details.number = exciseNumber;
         this.documents.push("excise");
       }
-      if (this.Details.service){
+      if (this.Details.service) {
         this.service_tax_Details = this.Details.service;
         this.service_tax_Details.doctype = "service_tax";
         this.service_tax_Details.number = serviceTax;
@@ -135,12 +138,31 @@ export default class IndexController {
   }
 
 
-  step_states_increase() {
-    ++this.stage;
-    console.log(this.stage);
+  response(response, status, headers) {
+    if (response.doctype == "service_tax")
+      this.service_tax_Details.image_path = response.image_path;
+    if (response.doctype == "tin")
+      this.tin_Details.image_path = response.image_path;
+    if (response.doctype == "pan")
+      this.pan_Details.image_path = response.image_path;
+    if (response.doctype == "excise")
+      this.excise_Details.image_path = response.image_path;
   }
-  step_states_decrease() {
-    --this.stage;
-    console.log(this.stage);
+
+  // collect_user_data()
+  // {
+  //   this.
+  // }
+
+  final_submit() {
+    this.full_data.tin = this.tin_Details;
+    this.full_data.service_tax = this.service_tax_Details;
+    this.full_data.pan = this.pan_Details;
+    this.full_data.excise = this.excise_Details;
+    this.$http.post('http://localhost:9005/submit', {
+      'data': this.full_data
+      })
   }
+
+
 }

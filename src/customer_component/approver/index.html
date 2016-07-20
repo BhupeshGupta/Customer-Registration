@@ -1,0 +1,27 @@
+<div class="container">
+  <div ng-if="!(approver.isuser);">
+    <h1> Kindly Log in to ERP Server</h1>
+    <div class="form-group">
+  <label for="usr">Name:</label>
+  <input type="text" class="form-control" ng-model="username">
+</div>
+<div class="form-group">
+  <label for="pwd">Password:</label>
+  <input type="password" class="form-control" ng-model = "password">
+</div>
+<md-button class="md-raised md-primary" ng-click="approver.authenticate(username, password)">Primary</md-button>
+
+    </div>
+  <div ng-if="approver.isuser;">
+    <div ng-repeat="(keys,value) in approver.full_data">
+      <h1> Customer {{keys + 1}} </h1>
+      <div ng-repeat="(x,y) in value">
+        <h1>{{x}}</h1>
+        <div ng-repeat = "(p,q) in y">
+            {{p}}:{{q}}
+        </div>
+      </div>
+      <button class="btn btn-success" ng-click="approver.approve(value)">Submit</buton>
+    </div>
+  </div>
+</div>

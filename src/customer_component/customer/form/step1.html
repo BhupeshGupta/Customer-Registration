@@ -1,6 +1,3 @@
-{{index.state}}
-
-
 <div class="container">
 </md-content>
 <md-content layout-padding>
@@ -9,12 +6,12 @@
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Address Title</label>
-          <input ng-model="user.firstName">
+          <input ng-model="address">
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Billing </label>
-            <md-select ng-model="user.state">
+            <md-select ng-model="billing">
               <md-option ng-repeat="value in index.address_type" value="{{value.abbrev}}">
                 {{value.abbrev}}
               </md-option>
@@ -59,10 +56,10 @@
   </div>
 </md-content>
 </div>
-<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();index.step_states_decrease();">
+<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();">
   <span class="fa fa-chevron-left"></sspan> Previous
 </button>
-<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.getCaptcha();index.step_states_increase();">
+<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();">
   Next
   <span class="fa fa-chevron-right"></span>
 </button>

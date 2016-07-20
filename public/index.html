@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Webpack App</title>
   <link href="_assets/main.css" rel="stylesheet">
 </head>
+
 <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div ng-cloak>
+      <md-content>
+        <md-tabs md-border-bottom>
+          <md-tab label="Registration">
+            <md-content class="md-padding">
+              <customer></customer>
+            </md-content>
+          </md-tab>
+          <md-tab label="Approval">
+            <md-content class="md-padding">
+              <approver></approver>
+            </md-content>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+    </div>
+  </nav>
 
-<customer></customer>
 
-
-
-
-<script src="_assets/main.js"></script>
+  <script src="_assets/main.js"></script>
 </body>
+
 </html>
