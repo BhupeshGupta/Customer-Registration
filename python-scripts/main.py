@@ -114,7 +114,7 @@ try:
         name, ext = os.path.splitext(upload.filename)
         if ext not in ('.png', '.jpg', '.jpeg'):
             return 'File extension not allowed.'
-        image_path = "/home/hackerx/Documents/docs/{}".format(uuid.uuid4())
+        image_path = "/home/hackerx/Documents/docs/{}{}".format(uuid.uuid4(),ext)
         upload.save(image_path ,overwrite=True)
         return {
             "image_path" : image_path,
@@ -144,23 +144,23 @@ try:
             return "nothing found in the database"
 
 
+    @route('/approver', method=['OPTIONS', 'GET','POST'])
+    @enable_cors
+    def approve():
+        if request.method == 'OPTIONS':
+            return {}
+        json_request = request.json
+        data = json_request.get('data')
+        alfresco = AlfrescoApi()
+        alfresco.main(data)
+
+
+
+
+
+
     if __name__ == "__main__":
         run(host="0.0.0.0", port=9005)
 
 except Exception as e:
     print e
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

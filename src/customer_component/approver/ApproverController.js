@@ -28,14 +28,18 @@ export default class ApproverController {
   populate_data() {
     this.$http.get(this.settings.pythonServerUrl() + '/display_details').then((res) => {
       this.full_data = res.data;
-      console.log(res.data);
     })
   }
 
-  approve(individual_data) {
+  approve(individualData) {
 
-    //function called when everything is approved 
-
+    angular.forEach(individualData, (data, key) => {
+      if (data.doctype) {
+        this.$http.post('http://localhost:9005/approver', {
+          'data': data
+        })
+      }
+    })
 
   }
 }

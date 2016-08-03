@@ -4,7 +4,6 @@ var step2 = require("./form/step2.html");
 var step3 = require("./form/step3.html");
 var step4 = require("./form/step4.html");
 
-
 export default class IndexController {
 
   constructor($http, FileUploader) {
@@ -13,6 +12,8 @@ export default class IndexController {
     this.$http = $http;
     this.stage = 0;
     this.documents = [];
+    this.customerAddressData= {};
+    this.addressTitle;
     this.full_data = {};
     this.getCaptcha();
     this.uploader = new FileUploader();
@@ -44,6 +45,21 @@ export default class IndexController {
     }];
 
     this.response = angular.bind(this, this.response);
+    this.customerAddressData = {
+      "address_title": "",
+      "address_type" : "",
+      "address_line1" : "",
+      "address_line2" : "",
+      "city" : "",
+      "state" : "",
+      "pincode" : "",
+      "country" : "",
+      "email_id" : "",
+      "phone" : "",
+      "fax" : "",
+      "is_primary_address" : true,
+      "is_shipping_address" : ""
+    }
 
   }
 
@@ -76,18 +92,22 @@ export default class IndexController {
       })
       .then(data => {
         this.tin_Details = data.data;
+        this.tin_Details.image_path = [];
         if (this.tin_Details) {
           this.istin = true;
           this.tin_Details.doctype = "tin";
           this.tin_Details.number = tin;
           this.documents.push("tin");
-
         }
       })
       .catch(error => {
-        alert("fukcer call the admin bitch");
+        alert("call the admin");
       });
   }
+
+
+
+
 
   getpan(pan, captchaCode) {
     let vm = this;
@@ -99,6 +119,7 @@ export default class IndexController {
       })
       .then(data => {
         this.pan_Details = data.data;
+        this.pan_Details.image_path = [];
         if (vm.pan_Details) {
           this.ispan = true;
           this.documents.push("pan");
@@ -120,14 +141,15 @@ export default class IndexController {
     }).then(data => {
       this.Details = data.data;
       if (this.Details.excise) {
-        console.log(this.Details.excise);
         this.excise_Details = this.Details.excise;
+        this.excise_Details.image_path = [];
         this.excise_Details.doctype = "excise";
         this.excise_Details.number = exciseNumber;
         this.documents.push("excise");
       }
       if (this.Details.service) {
         this.service_tax_Details = this.Details.service;
+        this.service_tax_Details.image_path = [];
         this.service_tax_Details.doctype = "service_tax";
         this.service_tax_Details.number = serviceTax;
         this.documents.push("service_tax");
@@ -140,19 +162,14 @@ export default class IndexController {
 
   response(response, status, headers) {
     if (response.doctype == "service_tax")
-      this.service_tax_Details.image_path = response.image_path;
+      this.service_tax_Details.image_path.push(response.image_path);
     if (response.doctype == "tin")
-      this.tin_Details.image_path = response.image_path;
+      this.tin_Details.image_path.push(response.image_path);
     if (response.doctype == "pan")
-      this.pan_Details.image_path = response.image_path;
+      this.pan_Details.image_path.push(response.image_path);
     if (response.doctype == "excise")
-      this.excise_Details.image_path = response.image_path;
+      this.excise_Details.image_path.push(response.image_path);
   }
-
-  // collect_user_data()
-  // {
-  //   this.
-  // }
 
   final_submit() {
     this.full_data.tin = this.tin_Details;
@@ -161,7 +178,7 @@ export default class IndexController {
     this.full_data.excise = this.excise_Details;
     this.$http.post('http://localhost:9005/submit', {
       'data': this.full_data
-      })
+    })
   }
 
 

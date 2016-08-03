@@ -20,10 +20,10 @@
 <br>
 <md-button class="md-raised md-primary" ng-click="index.getExcise(excise_number,captcha, serviceTax)">Submit</md-button>
  <br>
-<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();index.step_states_decrease();">
-  <span class="fa fa-chevron-left"></sspan> Previous
+<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();">
+  <span class="fa fa-chevron-left"></span> Previous
 </button>
-<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.step_states_increase();">
+<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.createImagePath();">
   Next
   <span class="fa fa-chevron-right"></span>
 </button>

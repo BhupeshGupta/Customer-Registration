@@ -1,10 +1,7 @@
 import requests
-import shutil
 import uuid
 import os
-from io import StringIO, BytesIO
-import datetime
-import decimal
+import ast
 import json
 
 config = {}
@@ -12,7 +9,9 @@ with open('config.json', 'r') as config_file:
     config = json.loads(config_file.read())
 
 class AlfrescoApi(object):
-    def __init__(self):None
+    def __init__(self):
+        self.image_path=None
+
 
 
     def set_login(self,username,password,host):
@@ -32,18 +31,16 @@ class AlfrescoApi(object):
 
 
     def Data_manipulation(self, data):
-        print data
-        dictionary = json.loads(data)
-        print dictionary
-        number = dictionary['number']
+        print "data manipulation"
+        number = data['number']
 
-        if dictionary['doctype'] == 'pan':
+        if data['doctype'] == 'pan':
             return 'pan','pan', number
-        if dictionary['doctype'] == 'tin':
+        if data['doctype'] == 'tin':
             return 'tin','tin', number
-        if dictionary['doctype'] == 'excise':
+        if data['doctype'] == 'excise':
             return 'excise','excise', number
-        if dictionary['doctype'] == 'service_tax':
+        if data['doctype'] == 'service_tax':
             return 'service_tax','service_tax', number
 
 
@@ -58,7 +55,7 @@ class AlfrescoApi(object):
             '{}/alfresco/service/api/upload'.format(self.url),
             auth=(self.user, self.password),
             files=[
-                ('filedata',('{}_{}{}'.format(prefix,number,ext) , open(self.image_path, 'rb')))
+                ('filedata',('{}_{}.{}'.format(prefix,number,ext) , open(self.image_path, 'rb')))
             ],
             data=alfersco_properties
         )
@@ -66,6 +63,7 @@ class AlfrescoApi(object):
             print req.content
             raise Exception('Alfresco upload returned {}'.format(req.status_code))
 
+        print req
         req = req.json()
         return req
 
@@ -91,31 +89,21 @@ class AlfrescoApi(object):
         storage_id, file_id = _.split('/')
         return storage_type, storage_id, file_id
 
-
-    def main(self,upload,data):
-
+    def main(self, data):
         self.set_login(config['ALFRESCO_DB_USER'], config['ALFRESCO_DB_PASS'], config['ALFRESCO_DB_HOST'])
-        ext = self.save_to_disk(upload)
-        prefix, alfresco_model, number =  self.Data_manipulation(data)
-        upload = self.upload_image(prefix, alfresco_model, number, ext)
-        data = json.loads(data)
-        update_properties = self.update_properties({
-            "properties": {
-                '{}:{}'.format(prefix, key.replace(' ','-').replace('(','-').replace(')','-').replace('/','-')): value for key, value in data.iteritems() if value
-                }
-            },
-            upload['nodeRef']
-        )
-        print update_properties
-
-
-
-
-
-
-
-
-
-
-
-
+        for image in data["image_path"]:
+            self.image_path = "{}".format(image)
+            ext = image.split(".")[1]
+            del data["image_path"]
+            prefix, alfresco_model, number =  self.Data_manipulation(data)
+            print prefix, alfresco_model, number
+            upload = self.upload_image(prefix, alfresco_model, number, ext)
+            update_properties = self.update_properties({
+                "properties": {
+                    '{}:{}'.format(prefix, key.replace(' ','-').replace('(','-').replace(')','-').replace('/','-')): value for key, value in data.iteritems() if value
+                    }
+                },
+                upload['nodeRef']
+            )
+            print update_properties
+            print "completed"
