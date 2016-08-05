@@ -1,22 +1,35 @@
 var step = require("./form/step.html");
-var step1 = require("./form/step1.html");
-var step2 = require("./form/step2.html");
+var step1 = require("./form/step2.html");
+var step2 = require("./form/step1.html");
 var step3 = require("./form/step3.html");
 var step4 = require("./form/step4.html");
 
 export default class IndexController {
 
-  constructor($http, FileUploader) {
+  constructor($http, settings,FileUploader) {
     this.istin = false;
     this.ispan = false;
     this.$http = $http;
     this.stage = 0;
     this.documents = [];
-    this.customerAddressData= {};
+    this.settings = settings;
+    this.customerAddressData = {};
     this.addressTitle;
     this.full_data = {};
     this.getCaptcha();
     this.uploader = new FileUploader();
+    $http.withCredentials = true
+
+    this.serviceTaxType = ('Consignee(Customer),Transporter').split(',').map(function(type) {
+      return {
+        abbrev: type
+      };
+    });
+    this.customerType = ('Company,Public Limited,Proprietorship,Partnership,Society,Trust,Individual').split(',').map(function(type) {
+      return {
+        abbrev: type
+      };
+    });
     this.address_type = ('Billing Shipping Office Warehouse').split(' ').map(function(state) {
       return {
         abbrev: state
@@ -47,18 +60,40 @@ export default class IndexController {
     this.response = angular.bind(this, this.response);
     this.customerAddressData = {
       "address_title": "",
-      "address_type" : "",
-      "address_line1" : "",
-      "address_line2" : "",
-      "city" : "",
-      "state" : "",
-      "pincode" : "",
-      "country" : "",
-      "email_id" : "",
-      "phone" : "",
-      "fax" : "",
-      "is_primary_address" : true,
-      "is_shipping_address" : ""
+      "address_type": "",
+      "address_line1": "",
+      "address_line2": "",
+      "city": "",
+      "state": "",
+      "pincode": "",
+      "country": "",
+      "email_id": "",
+      "phone": "",
+      "fax": "",
+      "is_primary_address": true,
+      "is_shipping_address": ""
+    }
+
+    this.customerData = {
+      "customer_name": "",
+      "customer_type": "",
+      "pan_number": "",
+      "tin_number": "",
+      "service_tax_liability": "",
+      "service_tax_number": "",
+      "ecc_number": "",
+      "excise_commissionerate_code": "",
+      "excise_range_code": "",
+      "excise_division_code": ""
+    }
+
+    this.contact = {
+      "first_name": "",
+      "last_name": "",
+      "phone": "",
+      "email_id": "",
+      "sms_optin": "",
+      "customer": ""
     }
 
   }
@@ -181,5 +216,28 @@ export default class IndexController {
     })
   }
 
+  autofill() {
+    if (this.documents.indexOf("excise") >= 0) {
+      this.customerData.ecc_number = this.excise_Details.number;
+      this.customerData.excise_commissionerate_code = this.excise_Details.ECCDetailsCommCode;
+      this.customerData.ecc_number = this.excise_Details.excise_no;
+      this.customerData.excise_range_code = this.excise_Details.ECCDetailsRangeCode;
+      this.customerData.excise_division_code = this.excise_Details.ECCDetailsDivCode;
+    }
+    if (this.documents.indexOf("tin") >= 0)
+      this.customerData.tin_number = this.tin_Details.number;
+    if (this.documents.indexOf("pan") >= 0)
+      this.customerData.pan_number = this.pan_Details.number;
+    if (this.documents.indexOf("service_tax") >= 0)
+      this.customerData.service_tax_number = this.service_tax_Details.number;
+    console.log(this.customerData);
+  }
+
+  createCustomer() {
+    this.$http.post(this.settings.pythonServerUrl() + '/customer',{
+      'data':this.customerData
+    }).then(data=>{console.log(data);})
+    .catch(error=>{ console.log("error");})
+  }
 
 }

@@ -1,10 +1,93 @@
-<div class="container">
-  <h1> Contact Information" </h1>
+<div class="container" ng-if="index.documents.length">
   <md-content layout-padding>
-
-    <!-- Form Start -->
-
     <form name="userForm">
+      <!-- Form Start -->
+      <h1>Basic Information</h1>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Full Name</label>
+          <input ng-model="index.customerData.customer_name">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Type</label>
+            <md-select ng-model="index.customerData.customer_type">
+              <md-option ng-repeat="value in index.customerType" value="{{value.abbrev}}">
+                {{value.abbrev}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </md-input-container>
+
+      </div>
+
+      <h1>Registration Numbers</h1>
+      <div layout-gt-sm="row">
+        <div ng-if="index.pan_Details">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Pan Number</label>
+            <input ng-model="index.customerData.pan_number">
+          </md-input-container>
+        </div>
+        <div ng-if="index.tin_Details">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Tin Number</label>
+            <input ng-model="index.customerData.tin_number">
+          </md-input-container>
+        </div>
+      </div>
+
+      <div layout-gt-sm="row" ng-if="index.service_tax_Details">
+        <md-input-container class="md-block" flex-gt-sm>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Type</label>
+            <md-select ng-model="index.customerData.service_tax_liability">
+              <md-option ng-repeat="value in index.serviceTaxType" value="{{value.abbrev}}">
+                {{value.abbrev}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </md-input-container>
+        <!-- Service Tax -->
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>service Tax Number</label>
+          <input ng-model="index.customerData.service_tax_number">
+        </md-input-container>
+      </div>
+
+
+      <div ng-if="index.excise_Details">
+        <h1> Ecc details</h1>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Ecc Number</label>
+            <input ng-model="index.customerData.ecc_number">
+          </md-input-container>
+
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Excise Commissionerate Code </label>
+            <input ng-model="index.customerData.excise_commissionerate_code">
+          </md-input-container>
+        </div>
+
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Excise Range Code</label>
+            <input ng-model="index.customerData.excise_range_code">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Excise Division code</label>
+            <input ng-model="index.customerData.excise_division_code">
+          </md-input-container>
+        </div>
+      </div>
+
+<button class = "btn btn-success" ng-click="index.createCustomer();">Create customer</button>
+
+      <h1> Contact Information" </h1>
+
       <div layout-gt-sm="row">
 
         <!-- Address -->
@@ -51,9 +134,8 @@
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <label>Postal Code</label>
-          <input name="postalCode" ng-model="index.customerAddressData.pincode" placeholder="12345" required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+          <input name="postalCode" ng-model="index.customerAddressData.pincode" placeholder="12345"  ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
           <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
-            <div ng-message="required" class="my-message">You must supply a postal code.</div>
             <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
             </div>
           </div>
@@ -92,73 +174,6 @@
       <md-checkbox ng-model="index.customerAddressData.is_shipping_address" aria-label="Checkbox 1">
         Preferred Shipping Address
       </md-checkbox>
-
-      <h1>Basic Information</h1>
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Full Name</label>
-          <input ng-model="index.customerAddressData.addressTitle">
-        </md-input-container>
-
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Customer Group</label>
-          <input ng-model="index.customerAddressData.addressTitle">
-        </md-input-container>
-      </div>
-
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Type</label>
-            <md-select ng-model="index.customerAddressData.address_type">
-              <md-option ng-repeat="value in index.address_type" value="{{value.abbrev}}">
-                {{value.abbrev}}
-              </md-option>
-            </md-select>
-          </md-input-container>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Territory</label>
-          <input ng-model="index.customerAddressData.addressTitle">
-        </md-input-container>
-      </div>
-
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Form Lead</label>
-        <input ng-model="index.customerAddressData.addressTitle">
-      </md-input-container>
-
-      <h1>Registration Numbers</h1>
-      <div layout-gt-sm="row">
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Pan Number</label>
-        <input ng-model="index.customerAddressData.addressTitle">
-      </md-input-container>
-
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Tin Number</label>
-        <input ng-model="index.customerAddressData.addressTitle">
-      </md-input-container>
-    </div>
-
-    <div layout-gt-sm="row">
-      <md-input-container class="md-block" flex-gt-sm>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Type</label>
-          <md-select ng-model="index.customerAddressData.address_type">
-            <md-option ng-repeat="value in index.address_type" value="{{value.abbrev}}">
-              {{value.abbrev}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-      </md-input-container>
-      <!-- Service Tax -->
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>service Tax Number</label>
-        <input ng-model="index.customerAddressData.addressTitle">
-      </md-input-container>
-    </div>
-    </div>
     </form>
   </md-content>
 </div>

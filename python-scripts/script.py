@@ -69,7 +69,7 @@ class CbecEasiestPortal:
          'assesseeCode': service_tax
 
       }, headers=self.headers, verify=False).text
-
+      print content
       success = ('validation error' not in content.lower())
       if success:
          rs = CbecEasiestPortal.__parse__(content)

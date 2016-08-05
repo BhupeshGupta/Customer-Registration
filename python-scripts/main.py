@@ -5,12 +5,17 @@ from bottle import post, run, request, get, static_file,Bottle, route, response
 from script import CbecEasiestPortal
 app = Bottle()
 import json
+import requests
 import os
 from alfresco import AlfrescoApi
 import redis
 from bottle import static_file
 import uuid
 import ast
+
+config = {}
+with open('config.json', 'r') as config_file:
+    config = json.loads(config_file.read())
 
 try:
     connection = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -153,6 +158,29 @@ try:
         data = json_request.get('data')
         alfresco = AlfrescoApi()
         alfresco.main(data)
+
+
+    @route('/customer', method=['OPTIONS', 'GET','POST'])
+    @enable_cors
+    def approve():
+        if request.method == 'OPTIONS':
+            return {}
+        print "hello login api called "
+        json_request = request.json
+        data = json_request.get('data')
+        print data
+        r = requests.get(config['erpServerUrl'] + '/api/method/login?usr=' + config['erpUserName'] + '&pwd=' + config['erpPassword'])
+        if (r.status_code == 502):
+            return "The Erp machine is down"
+        login_details =  r.json()
+        sid = login_details['sid']
+        data = json.dumps(data)
+        payload= {'data': data, 'sid': sid}
+        headers = {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"}
+        r = requests.post(config['erpServerUrl'] + '/api/resource/Customer/',  headers=headers, data = payload)
+        print "hello customer is made"
+        print r.json()
+        return
 
 
 

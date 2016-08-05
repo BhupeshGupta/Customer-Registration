@@ -35,7 +35,7 @@ export default class ApproverController {
 
     angular.forEach(individualData, (data, key) => {
       if (data.doctype) {
-        this.$http.post('http://localhost:9005/approver', {
+        this.$http.post(this.settings.pythonServerUrl() +'/approver', {
           'data': data
         })
       }
