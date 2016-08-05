@@ -6,15 +6,16 @@ var step4 = require("./form/step4.html");
 
 export default class IndexController {
 
-  constructor($http, settings,FileUploader) {
+  constructor($http, settings, FileUploader) {
     this.istin = false;
     this.ispan = false;
     this.$http = $http;
     this.stage = 0;
+    this.sid= "";
     this.documents = [];
+    this.primaryKey = "";
     this.settings = settings;
-    this.customerAddressData = {};
-    this.addressTitle;
+    this.contactActive = true;
     this.full_data = {};
     this.getCaptcha();
     this.uploader = new FileUploader();
@@ -35,11 +36,17 @@ export default class IndexController {
         abbrev: state
       };
     });
-    this.states = ('Arunchal-pradesh').split(' ').map(function(state) {
+    this.states = ('Arunchal-pradesh,punjab,anything,something,everything,nothing').split(',').map(function(state) {
       return {
         abbrev: state
       };
     });
+    this.country = ('Arunchal-pradesh,punjab,anything,something,everything,nothing').split(',').map(function(state) {
+      return {
+        abbrev: state
+      };
+    });
+
     this.steps = [{
       template: step,
       title: 'Get the source',
@@ -59,6 +66,7 @@ export default class IndexController {
 
     this.response = angular.bind(this, this.response);
     this.customerAddressData = {
+      "customer": "",
       "address_title": "",
       "address_type": "",
       "address_line1": "",
@@ -70,7 +78,7 @@ export default class IndexController {
       "email_id": "",
       "phone": "",
       "fax": "",
-      "is_primary_address": true,
+      "is_primary_address": "",
       "is_shipping_address": ""
     }
 
@@ -84,7 +92,7 @@ export default class IndexController {
       "ecc_number": "",
       "excise_commissionerate_code": "",
       "excise_range_code": "",
-      "excise_division_code": ""
+      "excise_division_code": "",
     }
 
     this.contact = {
@@ -234,10 +242,66 @@ export default class IndexController {
   }
 
   createCustomer() {
-    this.$http.post(this.settings.pythonServerUrl() + '/customer',{
-      'data':this.customerData
-    }).then(data=>{console.log(data);})
-    .catch(error=>{ console.log("error");})
+    this.$http.post(this.settings.pythonServerUrl() + '/customer', {
+        'data': this.customerData
+      }).then(data => {
+        if (data.data == "down")
+          console.log("The erp machine is down");
+        if (data.data == "exists")
+          console.log("This name exists");
+        if (data.data == "error")
+          console.log("some Error ocuured");
+        if (data.data.status == "true") {
+          console.log(data.data);
+          this.contactActive = true;
+          this.sid = data.data.sid;
+          this.primaryKey = data.data.primary_key;
+          this.customerAddressData.customer = data.data.primary_key;
+          this.customerAddressData.address_title = data.data.primary_key;
+        }
+      })
+      .catch(error => {
+        console.log("error");
+      })
+  }
+  contactDetails() {
+    if(this.customerAddressData.is_primary_address == true)
+      this.contact.is_primary_address = "1";
+    if(this.customerAddressData.is_primary_address == false)
+        this.contact.is_primary_address = "0";
+    if(this.customerAddressData.is_shipping_address == true)
+          this.contact.sms_optin = "1";
+    if(this.customerAddressData.is_shipping_address == false)
+            this.contact.sms_optin = "0";
+    this.customerAddressData.name = this.primaryKey;
+    console.log(this.customerAddressData);
+    this.$http.post(this.settings.pythonServerUrl() + '/address', {
+        'data': this.customerAddressData,
+        'sid': this.sid
+      }).then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+
+  controller(){
+    if(this.contact.sms_optin == true)
+      this.contact.sms_optin = "1";
+    if(this.contact.sms_optin == false)
+        this.contact.sms_optin = "0";
+    this.contact.customer = this.primaryKey;
+    this.$http.post(this.settings.pythonServerUrl() + '/contacts', {
+        'data': this.contact,
+        'sid': this.sid
+      }).then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
 }

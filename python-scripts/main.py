@@ -13,6 +13,8 @@ from bottle import static_file
 import uuid
 import ast
 
+
+
 config = {}
 with open('config.json', 'r') as config_file:
     config = json.loads(config_file.read())
@@ -23,6 +25,7 @@ try:
         raise Exception('Database Not connected')
 
     # the decorator
+
     def enable_cors(fn):
         def _enable_cors(*args, **kwargs):
             # set CORS headers
@@ -168,20 +171,59 @@ try:
         print "hello login api called "
         json_request = request.json
         data = json_request.get('data')
-        print data
         r = requests.get(config['erpServerUrl'] + '/api/method/login?usr=' + config['erpUserName'] + '&pwd=' + config['erpPassword'])
         if (r.status_code == 502):
-            return "The Erp machine is down"
+            return "down"
         login_details =  r.json()
         sid = login_details['sid']
         data = json.dumps(data)
         payload= {'data': data, 'sid': sid}
         headers = {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"}
         r = requests.post(config['erpServerUrl'] + '/api/resource/Customer/',  headers=headers, data = payload)
-        print "hello customer is made"
-        print r.json()
+        if (r.status_code == 409):
+            return "exists"
+        print "customer Created successfully"
+        response = r.json()
+        customer_details = response['data']
+        primary_key =  customer_details['name']
+        if primary_key:
+            return {'primary_key': primary_key,'status':'true','sid':sid}
+        else:
+            return "Error"
+
+
+    @route('/address', method=['OPTIONS', 'GET','POST'])
+    @enable_cors
+    def approve():
+        print " hello this is the key"
+        if request.method == 'OPTIONS':
+            return {}
+        json_request = request.json
+        data = json_request.get('data')
+        sid = json_request.get('sid')
+        data = json.dumps(data)
+        print data
+        payload= {'data': data, 'sid': sid}
+        headers = {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"}
+        r = requests.post(config['erpServerUrl'] + '/api/resource/Address/',  headers=headers, data = payload)
+        print r.status_code
+
+    @route('/contacts', method=['OPTIONS', 'GET','POST'])
+    @enable_cors
+    def approve():
+        print " hello this is the key"
+        if request.method == 'OPTIONS':
+            return {}
+        json_request = request.json
+        data = json_request.get('data')
+        sid = json_request.get('sid')
+        data = json.dumps(data)
+        payload= {'data': data, 'sid': sid}
+        headers = {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"}
+        r = requests.post(config['erpServerUrl'] + '/api/resource/Contact/',  headers=headers, data = payload)
         return
 
+        
 
 
 

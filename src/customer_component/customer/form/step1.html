@@ -6,7 +6,7 @@
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Full Name</label>
-          <input ng-model="index.customerData.customer_name">
+          <input name="name" ng-model="index.customerData.customer_name" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <md-input-container class="md-block" flex-gt-sm>
@@ -83,103 +83,141 @@
           </md-input-container>
         </div>
       </div>
+      <button class="btn btn-success" ng-click="index.createCustomer();" ng-disabled="userForm.$invalid">Create customer</button>
+    </form>
 
-<button class = "btn btn-success" ng-click="index.createCustomer();">Create customer</button>
 
-      <h1> Contact Information" </h1>
-
-      <div layout-gt-sm="row">
-
-        <!-- Address -->
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Address Title</label>
-          <input ng-model="index.customerAddressData.addressTitle">
-        </md-input-container>
-
-        <!-- Billing Address -->
-        <md-input-container class="md-block" flex-gt-sm>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Billing </label>
-            <md-select ng-model="index.customerAddressData.address_type">
-              <md-option ng-repeat="value in index.address_type" value="{{value.abbrev}}">
-                {{value.abbrev}}
-              </md-option>
-            </md-select>
-          </md-input-container>
-        </md-input-container>
-      </div>
-
-      <!-- Address line 1 and line 2 -->
-      <md-input-container class="md-block">
-        <label>Address</label>
-        <input ng-model="index.customerAddressData.address_line1">
-      </md-input-container>
-      <md-input-container md-no-float class="md-block">
-        <input ng-model="index.customerAddressData.address_line2" placeholder="Address Line 2">
+    <form name="contactForm" ng-if= "index.contactActive;">
+    <h1> Contact Information" </h1>
+    <div layout-gt-sm="row">
+      <!-- Address -->
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Address Title</label>
+        <input ng-model="index.customerAddressData.address_title" required>
       </md-input-container>
 
-      <!-- City State and Pincode -->
-      <div layout-gt-sm="row">
+      <!-- Billing Address -->
+      <md-input-container class="md-block" flex-gt-sm>
         <md-input-container class="md-block" flex-gt-sm>
-          <label>City</label>
-          <input ng-model="index.customerAddressData.city">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>State</label>
-          <md-select ng-model="index.customerAddressData.state">
-            <md-option ng-repeat="state in index.states" value="{{state.abbrev}}">
-              {{state.abbrev}}
+          <label>Billing </label>
+          <md-select ng-model="index.customerAddressData.address_type" required>
+            <md-option ng-repeat="value in index.address_type" value="{{value.abbrev}}">
+              {{value.abbrev}}
             </md-option>
           </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Postal Code</label>
-          <input name="postalCode" ng-model="index.customerAddressData.pincode" placeholder="12345"  ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
-          <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
-            <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
-            </div>
-          </div>
-        </md-input-container>
-      </div>
+      </md-input-container>
+    </div>
 
-      <!-- country -->
-      <md-input-container md-no-float class="md-block">
-        <input ng-model="index.customerAddressData.country" placeholder="Country">
+    <!-- Address line 1 and line 2 -->
+    <md-input-container class="md-block">
+      <label>Address</label>
+      <input ng-model="index.customerAddressData.address_line1">
+    </md-input-container>
+    <md-input-container md-no-float class="md-block">
+      <input ng-model="index.customerAddressData.address_line2" placeholder="Address Line 2">
+    </md-input-container>
+
+    <!-- City State and Pincode -->
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>City</label>
+        <input ng-model="index.customerAddressData.city">
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>State</label>
+        <md-select ng-model="index.customerAddressData.state">
+          <md-option ng-repeat="state in index.states" value="{{state.abbrev}}">
+            {{state.abbrev}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Postal Code</label>
+        <input name="postalCode" ng-model="index.customerAddressData.pincode" placeholder="12345" ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+        <div ng-messages="contactForm.postalCode.$error" role="alert" multiple>
+          <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
+          </div>
+        </div>
+      </md-input-container>
+    </div>
+
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Country</label>
+      <md-select ng-model="index.customerAddressData.state" required>
+        <md-option ng-repeat="state in index.country" value="{{state.abbrev}}">
+          {{state.abbrev}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+
+    <!-- Email Fax and phone -->
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Email</label>
+        <input name="Email" ng-model="index.customerAddressData.email_id" placeholder="xyz@gmail.com" ng-pattern="/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/">
+        <div ng-messages="contactForm.Email.$error" role="alert">
+          <div ng-message="pattern" class="my-message">That doesn't look like a valid Email Address.
+          </div>
+        </div>
       </md-input-container>
 
-      <!-- Email Fax and phone -->
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Email</label>
-          <input name="Email" ng-model="index.customerAddressData.email_id" placeholder="xyz@gmail.com" ng-pattern="/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/">
-          <div ng-messages="userForm.Email.$error" role="alert">
-            <div ng-message="pattern" class="my-message">That doesn't look like a valid Email Address.
-            </div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Phone Number</label>
+        <input name="Phone" ng-model="index.customerAddressData.phone" placeholder="09359359355">
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Fax</label>
+        <input name="fax" ng-model="index.customerAddressData.pincode" placeholder="12345" ng-pattern="/0*/">
+      </md-input-container>
+    </div>
+    <md-checkbox ng-model="index.customerAddressData.is_primary_address" aria-label="1">
+      Preferred Billing Address
+    </md-checkbox>
+    <md-checkbox ng-model="index.customerAddressData.is_shipping_address" aria-label="2">
+      Preferred Shipping Address
+    </md-checkbox>
+    <button class="btn btn-success" ng-click="index.contactDetails();" ng-disabled="contactForm.$invalid">Submit Address</button>
+  </form>
+
+  <form name="contact">
+
+    <h1>Contact Information</h1>
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>First Name</label>
+        <input name="name" ng-model="index.contact.first_name" required>
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Last Name</label>
+        <input name="name" ng-model="index.contact.last_name">
+      </md-input-container>
+
+    </div>
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Phone</label>
+        <input name="name" ng-model="index.contact.phone">
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Email</label>
+        <input name="Email" ng-model="index.contact.email_id" placeholder="xyz@gmail.com" ng-pattern="/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/">
+        <div ng-messages="contactForm.Email.$error" role="alert">
+          <div ng-message="pattern" class="my-message">That doesn't look like a valid Email Address.
           </div>
-        </md-input-container>
-
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Phone Number</label>
-          <input name="Phone" ng-model="index.customerAddressData.phone" placeholder="09359359355">
-        </md-input-container>
-
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Fax</label>
-          <input name="fax" ng-model="index.customerAddressData.pincode" placeholder="12345" ng-pattern="/0*/">
-        </md-input-container>
-      </div>
-      <md-checkbox ng-model="index.customerAddressData.is_primary_address" aria-label="Checkbox 1">
-        Preferred Billing Address
-      </md-checkbox>
-      <md-checkbox ng-model="index.customerAddressData.is_shipping_address" aria-label="Checkbox 1">
-        Preferred Shipping Address
-      </md-checkbox>
-    </form>
+        </div>
+      </md-input-container>
+    </div>
+    <md-checkbox ng-model="index.contact.sms_optin" aria-label="2">
+      Get a SMS
+    </md-checkbox>
+    <button class="btn btn-success" ng-click="index.controller();" ng-disabled="contact.$invalid">Submit Address</button>
   </md-content>
 </div>
 
 <button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();">
-  <span class="fa fa-chevron-left"></sspan> Previous
+  <span class="fa fa-chevron-left"></span> Previous
 </button>
 <button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();">
   Next
