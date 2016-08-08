@@ -11,11 +11,8 @@ export default class IndexController {
     this.ispan = false;
     this.$http = $http;
     this.stage = 0;
-    this.sid= "";
     this.documents = [];
-    this.primaryKey = "";
     this.settings = settings;
-    this.contactActive = true;
     this.full_data = {};
     this.getCaptcha();
     this.uploader = new FileUploader();
@@ -41,7 +38,7 @@ export default class IndexController {
         abbrev: state
       };
     });
-    this.country = ('Arunchal-pradesh,punjab,anything,something,everything,nothing').split(',').map(function(state) {
+    this.country = ('India,India,India,India,India,India').split(',').map(function(state) {
       return {
         abbrev: state
       };
@@ -148,10 +145,6 @@ export default class IndexController {
       });
   }
 
-
-
-
-
   getpan(pan, captchaCode) {
     let vm = this;
     this.$http.post('http://localhost:9005/getPanInfo', {
@@ -241,30 +234,11 @@ export default class IndexController {
     console.log(this.customerData);
   }
 
-  createCustomer() {
-    this.$http.post(this.settings.pythonServerUrl() + '/customer', {
-        'data': this.customerData
-      }).then(data => {
-        if (data.data == "down")
-          console.log("The erp machine is down");
-        if (data.data == "exists")
-          console.log("This name exists");
-        if (data.data == "error")
-          console.log("some Error ocuured");
-        if (data.data.status == "true") {
-          console.log(data.data);
-          this.contactActive = true;
-          this.sid = data.data.sid;
-          this.primaryKey = data.data.primary_key;
-          this.customerAddressData.customer = data.data.primary_key;
-          this.customerAddressData.address_title = data.data.primary_key;
-        }
-      })
-      .catch(error => {
-        console.log("error");
-      })
-  }
   contactDetails() {
+    if(this.contact.sms_optin == true)
+      this.contact.sms_optin = "1";
+    if(this.contact.sms_optin == false)
+        this.contact.sms_optin = "0";
     if(this.customerAddressData.is_primary_address == true)
       this.contact.is_primary_address = "1";
     if(this.customerAddressData.is_primary_address == false)
@@ -273,29 +247,8 @@ export default class IndexController {
           this.contact.sms_optin = "1";
     if(this.customerAddressData.is_shipping_address == false)
             this.contact.sms_optin = "0";
-    this.customerAddressData.name = this.primaryKey;
-    console.log(this.customerAddressData);
     this.$http.post(this.settings.pythonServerUrl() + '/address', {
-        'data': this.customerAddressData,
-        'sid': this.sid
-      }).then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
-
-  controller(){
-    if(this.contact.sms_optin == true)
-      this.contact.sms_optin = "1";
-    if(this.contact.sms_optin == false)
-        this.contact.sms_optin = "0";
-    this.contact.customer = this.primaryKey;
-    this.$http.post(this.settings.pythonServerUrl() + '/contacts', {
-        'data': this.contact,
-        'sid': this.sid
+        'data': {'customerData':this.customerData,'customerAddressData':this.customerAddressData,'customerContact':this.contact}
       }).then(data => {
         console.log(data);
       })

@@ -31,7 +31,7 @@ class AlfrescoApi(object):
 
 
     def Data_manipulation(self, data):
-        print "data manipulation"
+        print "data"
         number = data['number']
 
         if data['doctype'] == 'pan':
