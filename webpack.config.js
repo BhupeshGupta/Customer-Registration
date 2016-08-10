@@ -8,6 +8,11 @@ const config = makeWebpackConfig({
 });
 
 module.exports = {
+  resolve: {
+        alias: {
+            jquery: "node_modules/jquery"
+        }
+    }
   config: config,
   module: {
           loaders: [

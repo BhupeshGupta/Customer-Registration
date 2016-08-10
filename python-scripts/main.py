@@ -163,15 +163,27 @@ try:
     def approve():
         if request.method == 'OPTIONS':
             return {}
-        json_request = request.json
-        data = json_request.get('data')
+        data = request.forms.get('data')
+        data_json = json.loads(data)
+        data = data_json['data']
         data = json.dumps(data)
-        print data
         r = requests.post(config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.create_temp_data', data={'data': data})
         if (r.status_code == 409):
             print "user exists"
         elif (r.status_code == 502):
             print "down"
+        else:
+            body = r.text
+            return bottle.HTTPResponse(body=body,
+                                       headers=[('Content-Disposition', 'attachment; filename="qwerty.doc"'),
+                                                ('Content-type', 'application/doc'),
+                                                ('Server', 'WSGIServer/0.1 Python/2.7.11+'),
+                                                ('Access-Control-Allow-Credentials', 'true'),
+                                                ('Access-Control-Allow-Headers',
+                                                 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type'),
+                                                ('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'),
+                                                ('Access-Control-Allow-Origin', '*')])
+
         return
 
     if __name__ == "__main__":

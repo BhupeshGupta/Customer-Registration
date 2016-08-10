@@ -3,6 +3,7 @@ var step1 = require("./form/step2.html");
 var step2 = require("./form/step1.html");
 var step3 = require("./form/step3.html");
 var step4 = require("./form/step4.html");
+var $ = require("jquery");
 
 export default class IndexController {
 
@@ -38,7 +39,7 @@ export default class IndexController {
         abbrev: state
       };
     });
-    this.country = ('India,India,India,India,India,India').split(',').map(function(state) {
+    this.country = ('India1,India2,India3,India4,India5,India').split(',').map(function(state) {
       return {
         abbrev: state
       };
@@ -235,26 +236,36 @@ export default class IndexController {
   }
 
   contactDetails() {
-    if(this.contact.sms_optin == true)
+    if (this.contact.sms_optin == true)
       this.contact.sms_optin = "1";
-    if(this.contact.sms_optin == false)
-        this.contact.sms_optin = "0";
-    if(this.customerAddressData.is_primary_address == true)
+    if (this.contact.sms_optin == false)
+      this.contact.sms_optin = "0";
+    if (this.customerAddressData.is_primary_address == true)
       this.contact.is_primary_address = "1";
-    if(this.customerAddressData.is_primary_address == false)
-        this.contact.is_primary_address = "0";
-    if(this.customerAddressData.is_shipping_address == true)
-          this.contact.sms_optin = "1";
-    if(this.customerAddressData.is_shipping_address == false)
-            this.contact.sms_optin = "0";
-    this.$http.post(this.settings.pythonServerUrl() + '/address', {
-        'data': {'customerData':this.customerData,'customerAddressData':this.customerAddressData,'customerContact':this.contact}
-      }).then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    if (this.customerAddressData.is_primary_address == false)
+      this.contact.is_primary_address = "0";
+    if (this.customerAddressData.is_shipping_address == true)
+      this.contact.sms_optin = "1";
+    if (this.customerAddressData.is_shipping_address == false)
+      this.contact.sms_optin = "0";
+    this.data = JSON.stringify({
+      'data': {
+        'customerData': this.customerData,
+        'customerAddressData': this.customerAddressData,
+        'customerContact': this.contact
+      }
+    });
+
+    console.log("this");
+    console.log(this.data);
+    $('<form>', {
+        "action": 'http://localhost:9005/address',
+        "method": 'post',
+        "id": 'data'
+      }).append($('<input />', {
+        "name": 'data',
+        "value": this.data
+      })).appendTo(document.body).submit();
   }
 
 }
