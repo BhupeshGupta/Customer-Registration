@@ -7,10 +7,13 @@ export default class ApproverController {
     this.settings = settings;
     this.storage = $localStorage;
     this.populate_data();
+
   }
 
   auth() {
     if (this.$cookies.get('sid')) {
+      this.sid = this.$cookies.get('sid');
+      console.log(this.sid);
       return true;
     } else
       return false;
@@ -28,18 +31,21 @@ export default class ApproverController {
   populate_data() {
     this.$http.get(this.settings.pythonServerUrl() + '/display_details').then((res) => {
       this.full_data = res.data;
+      console.log(res.data);
     })
   }
 
-  approve(individualData) {
-
-    angular.forEach(individualData, (data, key) => {
-      if (data.doctype) {
-        this.$http.post(this.settings.pythonServerUrl() +'/approver', {
-          'data': data
-        })
-      }
-    })
+  approve(key, individualData) {
+    console.log(individualData);
+    this.$http.post(this.settings.pythonServerUrl() + '/create_customer_aprover', {
+        'sid': this.sid,
+        'data':individualData
+      }).then(data => {
+        console.log(data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
 
   }
 }

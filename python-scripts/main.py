@@ -23,7 +23,27 @@ try:
     if not connection:
         raise Exception('Database Not connected')
 
-    # the decorator
+
+    def push_in_alfresco(data):
+      print data
+      alfresco = AlfrescoApi()
+      upload = alfresco.main(data)
+      return upload
+
+    def attach_in_erp(sid, primary_key, name, workspace_url):
+      fileurl = config['ALFRESCO_DB_HOST'] + '/share/page/site/documents/document-details?nodeRef=' + workspace_url
+      print fileurl
+      r = requests.post(
+        config['erpServerUrl'] + '/',
+        data={'sid':sid ,'cmd': 'uploadfile',
+              'file_url': fileurl,
+              'doctype':'Customer',
+              'docname':primary_key,
+              'from_form': 'true'})
+      print r.status_code
+      print r.text
+
+
 
     def enable_cors(fn):
         def _enable_cors(*args, **kwargs):
@@ -147,18 +167,10 @@ try:
             return "nothing found in the database"
 
 
-    @route('/approver', method=['OPTIONS', 'GET','POST'])
-    @enable_cors
-    def approve():
-        if request.method == 'OPTIONS':
-            return {}
-        json_request = request.json
-        data = json_request.get('data')
-        alfresco = AlfrescoApi()
-        alfresco.main(data)
 
 
-    @route('/address', method=['OPTIONS', 'GET','POST'])
+
+    @route('/download_doc', method=['OPTIONS', 'GET','POST'])
     @enable_cors
     def approve():
         if request.method == 'OPTIONS':
@@ -167,7 +179,7 @@ try:
         data_json = json.loads(data)
         data = data_json['data']
         data = json.dumps(data)
-        r = requests.post(config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.create_temp_data', data={'data': data})
+        r = requests.post(config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.serve_html', data={'data': data})
         if (r.status_code == 409):
             print "user exists"
         elif (r.status_code == 502):
@@ -185,6 +197,48 @@ try:
                                                 ('Access-Control-Allow-Origin', '*')])
 
         return
+
+
+    @route('/create_customer_aprover', method=['OPTIONS', 'GET', 'POST'])
+    @enable_cors
+    def approve():
+      if request.method == 'OPTIONS':
+        return {}
+      json_request = request.json
+      data = json_request.get('data')
+      sid = json_request.get('sid')
+      customer_creation_data = json.dumps({
+        'customerData': data['customerData'],
+        'customerAddressData': data['customerAddressData'],
+        'customerContact': data['customerContact']
+      })
+      r = requests.post(
+        config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.approve',
+        data={'data': customer_creation_data,'sid':sid})
+      if (r.status_code == 409):
+        print "user exists"
+      elif (r.status_code == 502):
+        print "down"
+      response = r.json()
+      primary = response['message']
+      print primary
+
+      print data
+      for (key) in data:
+        if key in ['tin','pan','excise','service_tax']:
+          upload_file_data = push_in_alfresco(data[key])
+          attach_in_erp(sid, primary, upload_file_data['fileName'], upload_file_data['nodeRef'])
+
+
+
+
+
+
+
+
+
+
+
 
     if __name__ == "__main__":
         run(host="0.0.0.0", port=9005)

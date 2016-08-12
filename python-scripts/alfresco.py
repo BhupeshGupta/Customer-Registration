@@ -108,5 +108,5 @@ class AlfrescoApi(object):
                 },
                 upload['nodeRef']
             )
-            print update_properties
             print "completed"
+            return upload

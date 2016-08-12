@@ -213,6 +213,26 @@ export default class IndexController {
     this.full_data.service_tax = this.service_tax_Details;
     this.full_data.pan = this.pan_Details;
     this.full_data.excise = this.excise_Details;
+    this.full_data.customerData = this.customerData;
+    this.full_data.customerAddressData = this.customerAddressData;
+    this.full_data.customerContact = this.customerContact;
+    this.data = JSON.stringify({
+      'data': {
+        'customerData': this.customerData,
+        'customerAddressData': this.customerAddressData,
+        'customerContact': this.contact
+      }
+    });
+    console.log("this");
+    console.log(this.data);
+    $('<form>', {
+        "action": 'http://localhost:9005/download_doc',
+        "method": 'post',
+        "id": 'data'
+      }).append($('<input />', {
+        "name": 'data',
+        "value": this.data
+      })).appendTo(document.body).submit();
     this.$http.post('http://localhost:9005/submit', {
       'data': this.full_data
     })
@@ -248,24 +268,7 @@ export default class IndexController {
       this.contact.sms_optin = "1";
     if (this.customerAddressData.is_shipping_address == false)
       this.contact.sms_optin = "0";
-    this.data = JSON.stringify({
-      'data': {
-        'customerData': this.customerData,
-        'customerAddressData': this.customerAddressData,
-        'customerContact': this.contact
-      }
-    });
 
-    console.log("this");
-    console.log(this.data);
-    $('<form>', {
-        "action": 'http://localhost:9005/address',
-        "method": 'post',
-        "id": 'data'
-      }).append($('<input />', {
-        "name": 'data',
-        "value": this.data
-      })).appendTo(document.body).submit();
   }
 
 }

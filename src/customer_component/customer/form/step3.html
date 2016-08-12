@@ -5,6 +5,7 @@
         <div nv-file-over="" uploader="index.uploader" over-class="another-file-over-class" class="well my-drop-zone">
           Drag and Drop {{x}} files Here
         </div>
+        <input type="file" nv-file-select uploader="index.uploader" options="{ url: 'http://localhost:9005/upload', formData: [index.{{x}}_Details], onSuccess: index.response}"/>
       </div>
     </div>
   </div>
