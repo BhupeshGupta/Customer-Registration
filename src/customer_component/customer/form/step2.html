@@ -1,29 +1,49 @@
-<md-input-container class="md-block">
-  <label>Enter Your Service Tax number</label>
-  <input ng-model="serviceTax">
-</md-input-container>
-<div class="row">
-  <div class="col-lg-6">
-    <md-input-container class="md-block">
-      <label>Enter Your Excise Number</label>
-      <input ng-model="excise_number">
-    </md-input-container>
-  </div>
-  <div class="col-lg-6">
-    <md-input-container class="md-block">
-      <label>Enter Captcha</label>
-      <input ng-model="captcha">
-    </md-input-container>
-  </div>
+<div class="step2">
+    <div class="row">
+        <div class="form_container step1">
+            <div class="forms_container_main">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <div class=" col-xs-12 pd0">
+                        <md-input-container class="md-block">
+                            <label></label>
+                            <input ng-model="serviceTax" placeholder="Enter Your Service Tax number">
+                        </md-input-container>
+                    </div>
+                    <div class=" col-xs-12  pd0">
+                        <md-input-container class="md-block">
+                            <label></label>
+                            <input ng-model="excise_number" placeholder="Enter Your Excise Number">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <div class=" col-xs-12 ">
+                        <md-input-container class="md-block">
+                            <label></label>
+                            <input ng-model="captcha" placeholder="Enter Captcha">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 ">
+                        <md-input-container class="md-block">
+                            <img ng-src="{{index.captcha_path1}}" />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div class="footer_block">
+                    <md-button class="md-button" ng-click="index.getExcise(excise_number,captcha, serviceTax)">Submit</md-button>
+                    <img ng-src="{{index.captcha_path}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();">
+        <span class="fa fa-chevron-left"></span> Previous
+    </button>
+    <button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.autofill();">
+        Next
+        <span class="fa fa-chevron-right"></span>
+    </button>
 </div>
-<img ng-src="{{index.captcha_path1}}" />
-<br>
-<md-button class="md-raised md-primary" ng-click="index.getExcise(excise_number,captcha, serviceTax)">Submit</md-button>
- <br>
-<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();">
-  <span class="fa fa-chevron-left"></span> Previous
-</button>
-<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.autofill();">
-  Next
-  <span class="fa fa-chevron-right"></span>
-</button>
