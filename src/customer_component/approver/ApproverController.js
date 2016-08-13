@@ -41,7 +41,10 @@ export default class ApproverController {
         'sid': this.sid,
         'data':individualData
       }).then(data => {
-        console.log(data.data);
+        if (data.data['status_code'] != 200){
+          console.log("AN ERROR HAS OCCURED");
+          console.log(data.data['msg']);
+        }
       })
       .catch(error => {
         console.log(error);

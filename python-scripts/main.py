@@ -39,9 +39,17 @@ try:
               'file_url': fileurl,
               'doctype':'Customer',
               'docname':primary_key,
-              'from_form': 'true'})
-      print r.status_code
-      print r.text
+              'from_form': 'true',
+              'comment_by_fullname': 'ravi'})
+      return {
+          'status_code': r.status_code,
+          'msg': r.text
+      }
+
+
+
+
+
 
 
 
@@ -176,6 +184,8 @@ try:
         if request.method == 'OPTIONS':
             return {}
         data = request.forms.get('data')
+        print "this is the submitted data"
+        print data
         data_json = json.loads(data)
         data = data_json['data']
         data = json.dumps(data)
@@ -196,7 +206,7 @@ try:
                                                 ('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'),
                                                 ('Access-Control-Allow-Origin', '*')])
 
-        return
+
 
 
     @route('/create_customer_aprover', method=['OPTIONS', 'GET', 'POST'])
@@ -207,6 +217,7 @@ try:
       json_request = request.json
       data = json_request.get('data')
       sid = json_request.get('sid')
+      print sid
       customer_creation_data = json.dumps({
         'customerData': data['customerData'],
         'customerAddressData': data['customerAddressData'],
@@ -215,27 +226,20 @@ try:
       r = requests.post(
         config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.approve',
         data={'data': customer_creation_data,'sid':sid})
-      if (r.status_code == 409):
-        print "user exists"
-      elif (r.status_code == 502):
-        print "down"
-      response = r.json()
-      primary = response['message']
-      print primary
-
-      print data
-      for (key) in data:
-        if key in ['tin','pan','excise','service_tax']:
-          upload_file_data = push_in_alfresco(data[key])
-          attach_in_erp(sid, primary, upload_file_data['fileName'], upload_file_data['nodeRef'])
-
-
-
-
-
-
-
-
+      if (r.status_code != 200):
+          return {
+              'status_code': r.status_code,
+              'msg': r.text
+          }
+      print r.status_code
+      if (r.status_code == 200):
+          response = r.json()
+          primary = response['message']
+          for (key) in data:
+              if key in ['tin', 'pan', 'excise', 'service_tax']:
+                  upload_file_data = push_in_alfresco(data[key])
+                  response = attach_in_erp(sid, primary, upload_file_data['fileName'], upload_file_data['nodeRef'])
+                  return response
 
 
 

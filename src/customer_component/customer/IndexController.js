@@ -215,7 +215,7 @@ export default class IndexController {
     this.full_data.excise = this.excise_Details;
     this.full_data.customerData = this.customerData;
     this.full_data.customerAddressData = this.customerAddressData;
-    this.full_data.customerContact = this.customerContact;
+    this.full_data.customerContact = this.contact;
     this.data = JSON.stringify({
       'data': {
         'customerData': this.customerData,
@@ -223,8 +223,6 @@ export default class IndexController {
         'customerContact': this.contact
       }
     });
-    console.log("this");
-    console.log(this.data);
     $('<form>', {
         "action": 'http://localhost:9005/download_doc',
         "method": 'post',
@@ -252,7 +250,6 @@ export default class IndexController {
       this.customerData.pan_number = this.pan_Details.number;
     if (this.documents.indexOf("service_tax") >= 0)
       this.customerData.service_tax_number = this.service_tax_Details.number;
-    console.log(this.customerData);
   }
 
   contactDetails() {
