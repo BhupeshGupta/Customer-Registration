@@ -69,7 +69,7 @@ class CbecEasiestPortal:
          'assesseeCode': service_tax
 
       }, headers=self.headers, verify=False).text
-      print content
+
       success = ('validation error' not in content.lower())
       if success:
          rs = CbecEasiestPortal.__parse__(content)
@@ -82,7 +82,7 @@ class CbecEasiestPortal:
    def init_session(self):
       session = self.get_session()
       response = session.get(self.captcha_url, headers=self.headers, verify=False, stream=True)
-      with open('/tmp/excise.png', 'wb') as out_file:
+      with open('../cap/excise.png', 'wb') as out_file:
          shutil.copyfileobj(response.raw, out_file)
       return 'excise.png'
 
