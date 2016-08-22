@@ -31,7 +31,7 @@ class AlfrescoApi(object):
 
 
     def Data_manipulation(self, data):
-        print "data"
+        print "data manipulation"
         number = data['number']
 
         if data['doctype'] == 'pan':
@@ -45,7 +45,7 @@ class AlfrescoApi(object):
 
 
 
-    def upload_image(self,prefix,alfresco_model,number,ext, num):
+    def upload_image(self,prefix,alfresco_model,number,ext):
         alfersco_properties =  {
                     'contenttype': '{}:{}'.format(prefix, alfresco_model),
                     'siteid': config['ALFRESCO_SITEID'],
@@ -55,7 +55,7 @@ class AlfrescoApi(object):
             '{}/alfresco/service/api/upload'.format(self.url),
             auth=(self.user, self.password),
             files=[
-                ('filedata',('{}_{}{}.{}'.format(prefix,number,num, ext) , open(self.image_path, 'rb')))
+                ('filedata',('{}_{}.{}'.format(prefix,number,ext) , open(self.image_path, 'rb')))
             ],
             data=alfersco_properties
         )
@@ -91,16 +91,13 @@ class AlfrescoApi(object):
 
     def main(self, data):
         self.set_login(config['ALFRESCO_DB_USER'], config['ALFRESCO_DB_PASS'], config['ALFRESCO_DB_HOST'])
-        num = 0
         for image in data["image_path"]:
-            num = num + 1
-            data_without_image_path = data
-            data_without_image_path.pop("image_path", None)
             self.image_path = "{}".format(image)
             ext = image.split(".")[1]
-            prefix, alfresco_model, number =  self.Data_manipulation(data_without_image_path)
+            del data["image_path"]
+            prefix, alfresco_model, number =  self.Data_manipulation(data)
             print prefix, alfresco_model, number
-            upload = self.upload_image(prefix, alfresco_model, number, ext, num)
+            upload = self.upload_image(prefix, alfresco_model, number, ext)
             update_properties = self.update_properties({
                 "properties": {
                     '{}:{}'.format(prefix, key.replace(' ','-').replace('(','-').replace(')','-').replace('/','-')): value for key, value in data.iteritems() if value

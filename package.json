@@ -22,7 +22,9 @@
     "angular-material": "^1.1.0-rc.5",
     "angular-messages": "^1.5.7",
     "angular-multi-step-form": "^1.2.9",
+    "font-awesome": "^4.6.3",
     "html-loader": "^0.4.3",
+    "jquery": "^3.1.0",
     "ng-flow": "^2.1.4"
   },
   "devDependencies": {
