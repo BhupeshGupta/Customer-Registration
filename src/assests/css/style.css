@@ -779,3 +779,20 @@ md-content.customer_detail {
   width: 100% !important;
   margin-bottom: 0 !important;
 }
+
+md-select:focus:not([disabled]) ._md-select-value {
+  border: 0 !important;
+}
+
+.page_box button {
+  border: 0;
+}
+
+body .page_box button:hover {
+  background: #f50000 !importat;
+}
+
+.page_box .left {
+  float: none;
+  display: inline-block;
+}
