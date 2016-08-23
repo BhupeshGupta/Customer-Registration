@@ -252,7 +252,7 @@ export default class IndexController {
       this.customerData.service_tax_number = this.service_tax_Details.number;
         console.log(this.customerData);
     }
-  }
+  
 
   contactDetails() {
     if (this.contact.sms_optin == true)

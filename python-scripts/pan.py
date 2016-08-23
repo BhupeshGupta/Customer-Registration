@@ -60,7 +60,7 @@ class IncomeTaxPanPortal:
       self.request_id = soup.find(id='KnowYourJurisdiction_requestId')['value']
 
       response = session.get(self.captcha_url, headers=self.headers, verify=False, stream=True)
-      file_path = '../cap/{}.png'.format(self.request_id)
+      file_path = '/tmp/{}.png'.format(self.request_id)
       with open(file_path, 'wb') as out_file:
          shutil.copyfileobj(response.raw, out_file)
       return '{}.png'.format(self.request_id)
