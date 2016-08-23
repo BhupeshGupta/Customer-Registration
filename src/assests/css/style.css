@@ -567,8 +567,12 @@ md-content tr {
 }
 
 .reg_form h3 {
-  margin: 0;
+  margin: 0 0 20px 0;
   padding: 20px 0 20px 0;
+}
+
+md-input-container label:not(._md-container-ignore).md-required:after {
+  font-size: 16px;
 }
 
 .content_tabs li {
@@ -766,4 +770,12 @@ md-content.customer_detail {
 
 .approver_login .forms_container_main {
   padding: 40px 20px;
+}
+
+.form_container label.md-required {
+  padding-right: 15px !important;
+  text-align: right;
+  transform: none !important;
+  width: 100% !important;
+  margin-bottom: 0 !important;
 }
