@@ -107,17 +107,17 @@ export default class IndexController {
 
   getCaptcha() {
     let vm = this;
-    this.$http.get('http://localhost:9005/pan')
+    this.$http.get(this.settings.pythonServerUrl() + '/pan')
       .then(data => {
         this.token = data.data.token,
-          vm.captcha_path = 'http://localhost:9005/captcha/' + data.data.captcha_path
+          vm.captcha_path = this.settings.pythonServerUrl() + '/captcha/' + data.data.captcha_path
       })
       .catch(error => {
         alert("there was an error. Kindly visit Administrator");
       });
-    this.$http.get('http://localhost:9005/excise')
+    this.$http.get(this.settings.pythonServerUrl() + '/excise')
       .then(data => {
-        vm.captcha_path1 = 'http://localhost:9005/captcha/' + data.data.captcha_path,
+        vm.captcha_path1 = this.settings.pythonServerUrl() + '/captcha/' + data.data.captcha_path,
           this.token1 = data.data.token
       })
       .catch(error => {
@@ -127,7 +127,7 @@ export default class IndexController {
   }
 
   getTin(tin) {
-    this.$http.get('http://localhost:9005/tin', {
+    this.$http.get(this.settings.pythonServerUrl() + '/tin', {
         params: {
           'tin_number': tin
         }
@@ -149,7 +149,7 @@ export default class IndexController {
 
   getpan(pan, captchaCode) {
     let vm = this;
-    this.$http.post('http://localhost:9005/getPanInfo', {
+    this.$http.post(this.settings.pythonServerUrl() + '/getPanInfo', {
         'token': this.token,
         'captcha': captchaCode,
         'pan_no': pan,
@@ -170,7 +170,7 @@ export default class IndexController {
 
 
   getExcise(exciseNumber, captchaCode, serviceTax) {
-    this.$http.post('http://localhost:9005/getexciseinfo', {
+    this.$http.post(this.settings.pythonServerUrl() + '/getexciseinfo', {
       'token': this.token1,
       'captchaCode': captchaCode,
       'exciseNumber': exciseNumber,
@@ -225,14 +225,14 @@ export default class IndexController {
       }
     });
     $('<form>', {
-        "action": 'http://localhost:9005/download_doc',
+        "action": this.settings.pythonServerUrl() + '/download_doc',
         "method": 'post',
         "id": 'data'
       }).append($('<input />', {
         "name": 'data',
         "value": this.data
       })).appendTo(document.body).submit();
-    this.$http.post('http://localhost:9005/submit', {
+    this.$http.post(this.settings.pythonServerUrl() + '/submit', {
       'data': this.full_data
     })
   }
