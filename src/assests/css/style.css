@@ -57,7 +57,7 @@ md-tabs-content-wrapper {
 }
 
 .navbar .md-tab {
-  padding: 12px 24px;
+  padding: 13px 24px;
 }
 
 .navbar md-tab-item {
@@ -789,7 +789,12 @@ md-select:focus:not([disabled]) ._md-select-value {
 }
 
 body .page_box button:hover {
-  background: #f50000 !importat;
+  background: #f50000 !important;
+}
+
+body .form-step .page_box button:hover {
+  background: #f50000;
+  border: 2px solid #f50000;
 }
 
 .page_box .left {
