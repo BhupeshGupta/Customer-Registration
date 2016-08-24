@@ -114,7 +114,6 @@ body nav.navbar md-input-container input,
 body nav.navbar md-input-container md-select {
   display: inline-block;
   height: 50px;
-  cursor: pointer;
   padding: 0 20px;
   overflow: hidden;
   border: none;
@@ -272,6 +271,7 @@ multi-step-container .container {
   height: 40px;
   text-transform: uppercase;
   color: #424242;
+  cursor: pointer !important;
 }
 
 .form-step button:hover {
@@ -301,7 +301,7 @@ md-content.md-no-momentum {
 
 md-content tr td {
   border: 0 !important;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 md-content tr:nth-child(even) {
@@ -489,7 +489,7 @@ md-content tr {
 }
 
 .btn-outline-in i {
-  padding: 0 5px;
+  padding: 0;
   font-size: 13px;
 }
 
@@ -504,7 +504,7 @@ md-content tr {
   width: 130px;
   font-size: 13px;
   font-family: Raleway;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 1px;
   vertical-align: middle;
   text-transform: uppercase;
@@ -800,4 +800,16 @@ body .form-step .page_box button:hover {
 .page_box .left {
   float: none;
   display: inline-block;
+}
+
+.forms_container_main ul li {
+  border-right: 0;
+}
+
+.forms_container_main ul li:last-child {
+  border-right: 1px solid #ccc;
+}
+
+md-checkbox ._md-container {
+  left: 10px !important;
 }
