@@ -1,77 +1,56 @@
-<div class="row ">
-    <div class="form_container step1">
-        <div class="forms_container_main row-eq-height">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  form1 form_cmn">
-                <md-content class="md-no-momentum ">
-                    <div class="form_detail" ng-show="!(index.documents.indexOf('tin')>=0)">
-                        <h3> Enter The Tin number </h3>
-                        <div class="form_txt">
-                            <md-input-container class="md-icon-float md-block">
-                                <label></label>
-                                <input ng-model="tin" type="text" value="02030201611" placeholder="Tin Number">
-                            </md-input-container>
-                        </div>
-                        <div class="form_footer">
-                            <div class="footer_block">
-                                <md-button class="md-raised" ng-click="index.getTin(tin)" ng-disabled="index.tin">Submit</md-button>
-
-                                <md-checkbox ng-model="checkbox" ng-change="index.tin= !index.tin" aria-label="Checkbox 1">
-                                    I Don't Have a TIn
-                                </md-checkbox>
-                            </div>
-
-                        </div>
-                    </div>
-                    <table class="table" ng-show="index.documents.indexOf('tin')>=0">
-                        <tbody>
-                            <tr ng-repeat="(key,value) in index.tin_Details">
-                                <td>{{key}}</td>
-                                <td>{{value}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </md-content>
-            </div>
-
-
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form2 form_cmn">
-                <md-content class="md-no-momentum ">
-                    <div class="form_detail" ng-show="!(index.documents.indexOf('pan')>=0)">
-                        <h3> Enter The PanCard number </h3>
-                        <div class="form_txt">
-                            <md-input-container class="md-icon-float md-block">
-                                <label></label>
-                                <input ng-model="pan" type="text" placeholder="Pan Number">
-                            </md-input-container>
-
-                            <md-input-container class="md-icon-float md-block">
-                                <label></label>
-                                <input ng-model="captchaCode" type="text" placeholder="Captcha Code">
-                            </md-input-container>
-                        </div>
-                        <div class="form_footer">
-                            <div class="footer_block">
-                                <md-button class="md-raised " ng-click="index.getpan(pan,captchaCode)" ng-disabled="false">Submit</md-button>
-                                <img ng-src="{{index.captcha_path}}" />
-                            </div>
-                        </div>
-                    </div>
-                    <table class="table" ng-show="index.documents.indexOf('pan')>=0">
-                        <tbody>
-                            <tr ng-repeat="(key,value) in index.pan_Details">
-                                <td>{{key}}</td>
-                                <td>{{value}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </md-content>
-            </div>
-        </div>
+<div class="row">
+  <div class="col-lg-6">
+    <md-content class="md-no-momentum">
+      <h3> Enter The Tin number </h1>
+        <md-input-container class="md-icon-float md-block">
+          <label>Tin Number</label>
+          <input ng-model="tin" type="text">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="index.getTin(tin)" ng-disabled="index.tin">Submit</md-button>
+        <md-checkbox ng-model="checkbox" ng-change="index.tin= !index.tin" aria-label="Checkbox 1">
+            I Don't Have a TIn
+          </md-checkbox>
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="(key,value) in index.tin_Details">
+              <td>{{key}}</td>
+              <td>{{value}}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
-</div>
-<div class="page_box" style="width:100%">
-    <md-input-container>
-        <a href="#" class="left btn-outline-in" ng-disabled="$isFirst()" ng-click="$previousStep()"><i class="fa fa-angle-left"></i> Previous   </a>
-        <a href="#" class="right btn-outline-in" ng-disabled="$isLast() || !(index.tin && index.pan || 1)" ng-click="$nextStep();"> Next <i class="fa fa-angle-right" ></i> </a>
-    </md-input-container>
-</div>
+    <div class="col-lg-6">
+
+      <md-content class="md-no-momentum">
+        <h3> Enter The PanCard number </h1>
+
+        <md-input-container class="md-icon-float md-block">
+          <label>Pan Number</label>
+          <input ng-model="pan" type="text">
+        </md-input-container>
+
+        <md-input-container class="md-icon-float md-block">
+          <label>Captcha Code</label>
+          <input ng-model="captchaCode" type="text">
+        </md-input-container>
+
+        <md-button class="md-raised md-primary" ng-click="index.getpan(pan,captchaCode)" ng-disabled="false">Submit</md-button>
+        <img ng-src="{{index.captcha_path}}" />
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="(key,value) in index.pan_Details">
+              <td>{{key}}</td>
+              <td>{{value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </md-content>
+    </div>
+  </div>
+  <button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep()">
+    <span class="fa fa-chevron-left"></sspan> Previous
+  </button>
+  <button ng-disabled="$isLast();" class="btn btn-success pull-right" ng-click="$nextStep();">
+    Next
+    <span class="fa fa-chevron-right"></span>
+  </button>

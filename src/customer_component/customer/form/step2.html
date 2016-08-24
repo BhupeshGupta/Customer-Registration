@@ -1,83 +1,29 @@
-<div class="container-block">
-  <div class="row">
-    <div class="form_container step1">
-      <div class="forms_container_main  md-no-momentum">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  form1 form_cmn">
-          <md-content>
-            <div class="form_detail" ng-show="!(index.documents.indexOf('tin')>=0)">
-
-              <md-input-container class="md-block">
-                <label></label>
-                <input ng-model="serviceTax" placeholder="Enter Your Service Tax number">
-              </md-input-container>
-              <md-input-container class="md-block">
-                <label></label>
-                <input ng-model="excise_number" placeholder="Enter Your Excise Number">
-              </md-input-container>
-            </div>
-            <table class="table" ng-show="index.documents.indexOf('excise_Details')>=0">
-              <tbody>
-                <tr ng-repeat="(key,value) in index.excise_Details">
-                  <td>{{key}}</td>
-                  <td>{{value}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </md-content>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form2 form_cmn pd0">
-          <md-content>
-            <div class="form_detail" ng-show="!(index.documents.indexOf('pan_Detailsf')>=0)">
-              <div class="form_txt">
-                <md-input-container class="md-block">
-                  <label></label>
-                  <input ng-model="captcha" placeholder="Enter Captcha">
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                  <img ng-src="{{index.captcha_path1}}" />
-                </md-input-container>
-              </div>
-            </div>
-            <table class="table" ng-show="index.documents.indexOf('service_tax_Details')>=0">
-              <tbody>
-                <tr ng-repeat="(key,value) in index.service_tax_Details">
-                  <td>{{key}}</td>
-                  <td>{{value}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </md-content>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="footer_block">
-
-            <div class="page_box">
-              <div class="page_box float-right">
-                <div class="form_footer">
-                  <div class="footer_block">
-                    <md-button class="md-raised " ng-click="index.getExcise(excise_number,captcha, serviceTax)">Submit</md-button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
+<md-input-container class="md-block">
+  <label>Enter Your Service Tax number</label>
+  <input ng-model="serviceTax">
+</md-input-container>
+<div class="row">
+  <div class="col-lg-6">
+    <md-input-container class="md-block">
+      <label>Enter Your Excise Number</label>
+      <input ng-model="excise_number">
+    </md-input-container>
   </div>
-
-
-
+  <div class="col-lg-6">
+    <md-input-container class="md-block">
+      <label>Enter Captcha</label>
+      <input ng-model="captcha">
+    </md-input-container>
+  </div>
 </div>
-
-
-<div class="page_box" style="width:100%">
-  <md-input-container>
-    <a href="#" class="left btn-outline-in" ng-disabled="$isFirst()" ng-click="$previousStep();"><i class="fa fa-angle-left"></i> Previous   </a>
-    <a href="#" ng-disabled="$isLast()" class="right btn-outline-in" ng-click="$nextStep();index.autofill();"> Next <i class="fa fa-angle-right" ></i> </a>
-  </md-input-container>
-</div>
+<img ng-src="{{index.captcha_path1}}" />
+<br>
+<md-button class="md-raised md-primary" ng-click="index.getExcise(excise_number,captcha, serviceTax)">Submit</md-button>
+ <br>
+<button ng-disabled="$isFirst()" class="btn btn-danger" ng-click="$previousStep();">
+  <span class="fa fa-chevron-left"></span> Previous
+</button>
+<button ng-disabled="$isLast()" class="btn btn-success pull-right" ng-click="$nextStep();index.autofill();">
+  Next
+  <span class="fa fa-chevron-right"></span>
+</button>

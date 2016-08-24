@@ -64,8 +64,7 @@ class tin_verification:
 
         keys = [x.text for x in soup.findAll("tr", {'class': 'headrow'})[0].findAll('td')]
         values = [x.text for x in soup.findAll('td', {'style': 'word-wrap: break-word'})]
-        print keys
-        print values
+
         return {
             key: values[index] \
             for index, key in enumerate(keys)

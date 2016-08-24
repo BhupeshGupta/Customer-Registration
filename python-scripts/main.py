@@ -82,10 +82,6 @@ try:
             'token': portal.dump_session()
         }
 
-
-
-
-
     @get('/captcha/<file>')
     def get_captcha(file):
         return static_file(file, root='/tmp/')

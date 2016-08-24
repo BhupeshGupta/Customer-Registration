@@ -1,64 +1,27 @@
-<div class="container approver_login">
-  <div class="form-step">
-    <div class="row">
-      <div class="form_container step1">
-        <div class="forms_container_main row-eq-height">
-          <div class="form1 form_cmn">
-            <md-content class=" center md-no-momentum  _md">
-              <div class="form_detail">
-                <div ng-if="!(approver.isuser);">
-                  <h3> Kindly Log in to ERP Server</h3>
+<div class="container">
+  <div ng-if="!(approver.isuser);">
+    <h1> Kindly Log in to ERP Server</h1>
+    <div class="form-group">
+  <label for="usr">Name:</label>
+  <input type="text" class="form-control" ng-model="username">
+</div>
+<div class="form-group">
+  <label for="pwd">Password:</label>
+  <input type="password" class="form-control" ng-model = "password">
+</div>
+<md-button class="md-raised md-primary" ng-click="approver.authenticate(username, password)">Primary</md-button>
 
-                  <div class="form_txt">
-                    <md-input-container class="md-icon-float md-block">
-                      <label for="usr"></label>
-                      <input type="text" class="form-control" ng-model="username" placeholder="Name">
-                    </md-input-container>
-                    <md-input-container class="md-icon-float md-block">
-                      <label for="pwd"></label>
-                      <input type="password" class="form-control" ng-model="password" placeholder="Password:">
-                    </md-input-container>
-                  </div>
-                  <div class="form_footer">
-                    <div class="footer_block">
-                      <md-button class="md-raised" ng-click="approver.authenticate(username, password)">Primary</md-button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form_detail reg_detail_form">
-                <div ng-if="approver.isuser;" class="display_data">
-                  <div ng-repeat="(keys,value) in approver.full_data">
-                    <h1> Customer {{keys + 1}} </h1>
-                    <div ng-repeat="(x,y) in value">
-                      <h3 class="app_head">{{x}}</h3>
-                      <div ng-repeat="(p,q) in y">
-                        <ul class="user_data">
-                          <li class="heading_data">{{p}}</li>
-                          <li class="text_data">{{q}}</li>
-                        </ul>
-
-                      </div>
-                    </div>
-                    <div class="form_footer">
-                      <div class="footer_block">
-                        <md-button class="md-raised " ng-click="approver.approve(value)">Submit</md-button>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </md-content>
-          </div>
+    </div>
+  <div ng-if="approver.isuser;">
+    <div ng-repeat="(keys,value) in approver.full_data">
+      <h1> Customer {{keys + 1}} </h1>
+      <div ng-repeat="(x,y) in value">
+        <h1>{{x}}</h1>
+        <div ng-repeat = "(p,q) in y">
+            {{p}}:{{q}}
         </div>
       </div>
+      <button class="btn btn-success" ng-click="approver.approve(key,value)">Submit</buton>
     </div>
-
-  </div>
-  <div class="page_box">
-    <md-input-container>
-      <a href="#" class="left btn-outline-in" ng-click="approver.approve(key,value)">Submit   </a>
-    </md-input-container>
   </div>
 </div>
