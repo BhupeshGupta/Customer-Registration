@@ -7,7 +7,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "build": "webpack --config webpack-production.config.js --progress --profile --colors",
+    "build": "NODE_ENV=production webpack --config webpack-production.config.js --progress --profile --colors",
     "build-dev": "webpack --config webpack.config.js --progress --profile --colors",
     "dev-server": "webpack-dev-server --config webpack-dev-server.config.js --progress --colors --port 2992 --inline --content-base public",
     "test": "karma start",

@@ -1,8 +1,7 @@
 {
   "ALFRESCO_DB_USER": "admin",
   "ALFRESCO_DB_PASS": "root",
-  "ALFRESCO_DB_HOST": "http://localhost:9090",
+  "ALFRESCO_DB_HOST": "http://docs.arungas.com:8080",
   "ALFRESCO_SITEID": "Documents",
   "ALFRESCO_CONTAINERID": "documentLibrary"
 }
-
