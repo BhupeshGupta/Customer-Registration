@@ -1,5 +1,5 @@
 .inputdemoIcons {
-  /*
+    /*
 .right-icon {
   position: absolute;
   top: 4px;
@@ -9,33 +9,49 @@
 }
 */
 }
-.hello{
-  margin-top:80px;
+
+.hello {
+    margin-top: 80px;
 }
+
 .row-eq-height {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display:         flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .inputdemoIcons .inputIconDemo {
-  min-height: 48px;
+    min-height: 48px;
 }
+
 .inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.email {
-  color: green;
+    color: green;
 }
+
 .inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.name {
-  color: dodgerblue;
+    color: dodgerblue;
 }
-.inputdemoIcons md-input-container.md-input-invalid > md-icon.email, .inputdemoIcons md-input-container.md-input-invalid > md-icon.name {
-  color: red;
+
+.inputdemoIcons md-input-container.md-input-invalid > md-icon.email,
+.inputdemoIcons md-input-container.md-input-invalid > md-icon.name {
+    color: red;
 }
-.my-drop-zone { border: dotted 3px lightgray; }
-.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-.another-file-over-class { border: dotted 3px green; }
+
+.my-drop-zone {
+    border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+    border: dotted 3px red;
+}
 
 
+/* Default class applied to drop zones on over */
+
+.another-file-over-class {
+    border: dotted 3px green;
+}
 
 canvas {
     background-color: #f3f3f3;
@@ -45,4 +61,58 @@ canvas {
     border: 1px solid #c3c3c3;
     height: 100px;
     margin: 6px 0 0 6px;
+}
+
+.heading_tabs tr {
+    border: 1px solid #ddd !important;
+    height: 40px;
+}
+
+.status_btn button {
+    border: 1px solid #ccc;
+    height: 30px;
+    line-height: 1.5;
+    padding: 4px 7px;
+    text-align: center;
+    width: 30px;
+    color: #000;
+}
+
+.status_btn {
+    display: inline;
+    margin-left: 10px;
+}
+
+.heading_tabs tr th {
+    height: 30px;
+    font-weight: normal;
+    text-transform: uppercase;
+    border: 0 !important;
+    font-family: open sans;
+    vertical-align: middle !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.progress_bar h3 {
+    margin: 20px 0 10px 0;
+}
+
+.forms_container_main ul {
+    background: #fcfcfc;
+    padding: 0;
+}
+
+.forms_container_main ul li {
+    list-style: none;
+    float: left;
+    width: 33%;
+    vertical-align: middle;
+    background: #fcfcfc;
+    text-align: center;
+    display: table-cell;
+    text-transform: uppercase;
+    height: 60px;
 }

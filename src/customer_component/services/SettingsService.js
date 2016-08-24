@@ -1,10 +1,9 @@
 export default class SettingService {
-    constructor() {
-    }
+    constructor() {}
     erpServerUrl() {
-        return 'http://localhost:8080';
+        return 'http://erp.arungas.com';
     }
-    pythonServerUrl(){
-      return 'http://localhost:9005';
+    pythonServerUrl() {
+        return 'http://localhost:9006';
     }
 }

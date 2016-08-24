@@ -9,6 +9,7 @@ export default class IndexController {
 
   constructor($http, settings, FileUploader) {
     this.istin = false;
+    this.notin = false;
     this.ispan = false;
     this.$http = $http;
     this.stage = 0;
@@ -164,7 +165,7 @@ export default class IndexController {
           this.pan_Details.number = pan;
         }
       })
-      .catch(error => {});
+      .catch(error => {console.log(error);});
   }
 
 
@@ -250,7 +251,9 @@ export default class IndexController {
       this.customerData.pan_number = this.pan_Details.number;
     if (this.documents.indexOf("service_tax") >= 0)
       this.customerData.service_tax_number = this.service_tax_Details.number;
-  }
+        console.log(this.customerData);
+    }
+
 
   contactDetails() {
     if (this.contact.sms_optin == true)
@@ -267,5 +270,6 @@ export default class IndexController {
       this.contact.sms_optin = "0";
 
   }
+
 
 }

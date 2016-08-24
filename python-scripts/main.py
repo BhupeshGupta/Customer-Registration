@@ -245,7 +245,7 @@ try:
 
 
     if __name__ == "__main__":
-        run(host="0.0.0.0", port=9005)
+        run(host="0.0.0.0", port=9006)
 
 except Exception as e:
     print e
