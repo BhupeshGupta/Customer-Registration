@@ -109,8 +109,10 @@ export default class IndexController {
     let vm = this;
     this.$http.get(this.settings.pythonServerUrl() + '/pan')
       .then(data => {
+        console.log("Pan is entered");
         this.token = data.data.token,
-          vm.captcha_path = this.settings.pythonServerUrl() + '/captcha/' + data.data.captcha_path
+          vm.captcha_path = this.settings.pythonServerUrl() + '/captcha/' + data.data.captcha_path;
+          console.log(vm.captcha_path)
       })
       .catch(error => {
         alert("there was an error. Kindly visit Administrator");
