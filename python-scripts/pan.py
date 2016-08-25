@@ -58,11 +58,12 @@ class IncomeTaxPanPortal:
       response = session.get(self.session_init_url, verify=False).text
       soup = BeautifulSoup(response, 'html.parser')
       self.request_id = soup.find(id='KnowYourJurisdiction_requestId')['value']
-
+      print "In in it session"
       response = session.get(self.captcha_url, headers=self.headers, verify=False, stream=True)
       file_path = '/tmp/{}.png'.format(self.request_id)
       with open(file_path, 'wb') as out_file:
          shutil.copyfileobj(response.raw, out_file)
+      print "just befor retunr of init session"
       return '{}.png'.format(self.request_id)
 
    def set_captcha(self, captcha):
@@ -75,6 +76,7 @@ class IncomeTaxPanPortal:
          'request_id': self.request_id
       }
       session_pickle = pickle.dumps(s_obj)
+      print "just before return of dump session"
       return base64.b64encode(session_pickle)
 
    def load_session(self, session_string):
