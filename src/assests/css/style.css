@@ -813,3 +813,18 @@ body .form-step .page_box button:hover {
 md-checkbox ._md-container {
   left: 10px !important;
 }
+
+
+/* Remove controls from Firefox */
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+/* Re-applies the controls on :hover and :focus */
+
+input[type="number"]:hover,
+input[type="number"]:focus {
+  -moz-appearance: number-input;
+}
