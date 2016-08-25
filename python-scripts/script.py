@@ -26,7 +26,7 @@ class CbecEasiestPortal:
          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
       }
       self.proxy = {
-               'https': 'https://14.139.213.183:3128'
+               'https': 'https://localhost:8888'
       }
       self.data_url = "https://cbec-easiest.gov.in/EST/AssesseeVerificationResult.do"
       self.captcha_url = "https://cbec-easiest.gov.in/EST/CaptchaFeedback"

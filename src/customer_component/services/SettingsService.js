@@ -4,6 +4,6 @@ export default class SettingService {
         return 'http://erp.arungas.com';
     }
     pythonServerUrl() {
-        return 'http://localhost:9006';
+        return 'python';
     }
 }
