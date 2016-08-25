@@ -77,6 +77,7 @@ try:
     @enable_cors
     def init_request():
         portal = IncomeTaxPanPortal()
+        print "inside customer portal"
         return {
             'captcha_path': portal.init_session(),
             'token': portal.dump_session()
