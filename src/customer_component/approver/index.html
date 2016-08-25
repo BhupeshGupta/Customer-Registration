@@ -34,10 +34,9 @@
                       <h3 class="app_head">{{x}}</h3>
                       <div ng-repeat="(p,q) in y">
                         <ul class="user_data">
-                          <li class="heading_data">{{p}}</li>
+                          <li class="heading_data">{{p.replace("_"," ").replace("_"," ");}}</li>
                           <li class="text_data">{{q}}</li>
                         </ul>
-
                       </div>
                     </div>
                     <div class="form_footer">
@@ -55,10 +54,5 @@
       </div>
     </div>
 
-  </div>
-  <div class="page_box">
-    <md-input-container>
-      <a href="#" class="left btn-outline-in" ng-click="approver.approve(key,value)">Submit   </a>
-    </md-input-container>
   </div>
 </div>
