@@ -5,6 +5,11 @@ import json
 import base64
 import pickle
 
+
+config = {}
+with open('config.json', 'r') as config_file:
+    config = json.loads(config_file.read())
+
 class CbecEasiestPortal:
    ACTIVE = 'ACTIVE'
    INVALID = 'INVALID'
@@ -20,7 +25,9 @@ class CbecEasiestPortal:
          'Referer': 'https://cbec-easiest.gov.in/EST/AssesseeVerification.do',
          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
       }
-
+      self.proxy = {
+               'https': 'https://14.139.213.183:3128'
+      }
       self.data_url = "https://cbec-easiest.gov.in/EST/AssesseeVerificationResult.do"
       self.captcha_url = "https://cbec-easiest.gov.in/EST/CaptchaFeedback"
 
@@ -45,7 +52,7 @@ class CbecEasiestPortal:
          'captchaText': self.captcha,
          'assesseeCode': excise_no
 
-      }, headers=self.headers, verify=False).text
+      }, headers=self.headers, proxies=self.proxy, verify=False).text
 
       success = ('validation error' not in content.lower())
       if success:
@@ -68,7 +75,7 @@ class CbecEasiestPortal:
          'captchaText': self.captcha,
          'assesseeCode': service_tax
 
-      }, headers=self.headers, verify=False).text
+      }, headers=self.headers,proxies=self.proxy, verify=False).text
       print content
       success = ('validation error' not in content.lower())
       if success:
@@ -81,7 +88,8 @@ class CbecEasiestPortal:
 
    def init_session(self):
       session = self.get_session()
-      response = session.get(self.captcha_url, headers=self.headers, verify=False, stream=True)
+      response = session.get(self.captcha_url, headers=self.headers, proxies=self.proxy, verify=False, stream=True)
+      print response.request.path_url
       with open('/tmp/excise.png', 'wb') as out_file:
          shutil.copyfileobj(response.raw, out_file)
       return 'excise.png'
