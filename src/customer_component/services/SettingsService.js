@@ -1,7 +1,7 @@
 export default class SettingService {
     constructor() {}
     erpServerUrl() {
-        return 'http://erp.arungas.com';
+        return 'https://erp.arungas.com';
     }
     pythonServerUrl() {
         return 'python';
