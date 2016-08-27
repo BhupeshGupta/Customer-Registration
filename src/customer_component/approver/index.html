@@ -28,7 +28,7 @@
               </div>
               <div class="form_detail reg_detail_form">
                 <div ng-if="approver.isuser;" class="display_data">
-                  <div ng-repeat="(keys,value) in approver.full_data">
+                  <div ng-if="approver.ifData" ng-repeat="(keys,value) in approver.full_data">
                     <h1> Customer {{keys + 1}} </h1>
                     <div ng-repeat="(x,y) in value">
                       <h3 class="app_head">{{x}}</h3>
@@ -44,8 +44,8 @@
                         <md-button class="md-raised " ng-click="approver.approve(value)">Submit</md-button>
                       </div>
                     </div>
-
                   </div>
+                  <h2 ng-if="!approver.ifData"> No New Registartion was found, Kindly contact the customer for new registrations</h1>
                 </div>
               </div>
             </md-content>
