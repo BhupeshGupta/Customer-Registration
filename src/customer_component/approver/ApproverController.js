@@ -7,7 +7,7 @@ export default class ApproverController {
     this.settings = settings;
     this.storage = $localStorage;
     this.populate_data();
-
+    this.ifData = false;
   }
 
   auth() {
@@ -30,8 +30,10 @@ export default class ApproverController {
 
   populate_data() {
     this.$http.get(this.settings.pythonServerUrl() + '/display_details').then((res) => {
-      this.full_data = res.data;
-      console.log(res.data);
+      if (res.data != "nothing found in the database") {
+        this.full_data = res.data;
+        this.ifData = true;
+      }
     })
   }
 
@@ -39,9 +41,9 @@ export default class ApproverController {
     console.log(individualData);
     this.$http.post(this.settings.pythonServerUrl() + '/create_customer_aprover', {
         'sid': this.sid,
-        'data':individualData
+        'data': individualData
       }).then(data => {
-        if (data.data['status_code'] != 200){
+        if (data.data['status_code'] != 200) {
           console.log("AN ERROR HAS OCCURED");
           console.log(data.data['msg']);
         }
