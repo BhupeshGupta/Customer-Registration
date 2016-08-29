@@ -7,8 +7,6 @@ var $ = require("jquery");
 var alertify = require('alertify.js');
 
 
-
-
 export default class IndexController {
 
   constructor($http, settings, FileUploader) {
@@ -120,7 +118,7 @@ export default class IndexController {
       name: 'ext',
       fn: function(item) {
         if (item.type.split("/").indexOf("image") <= -1)
-          alertify.alert("kindly uoload a image with proper extension");
+          alertify.alert("kindly upload a image with proper extension");
         else
           return true;
       }
@@ -140,7 +138,7 @@ export default class IndexController {
         console.log(vm.captcha_path)
       })
       .catch(error => {
-        alert("there was an error. Kindly visit Administrator");
+        alertify.alert("there was an error. Kindly Reload the page or contact Administartor");
       });
     this.$http.get(this.settings.pythonServerUrl() + '/excise')
       .then(data => {
@@ -148,7 +146,7 @@ export default class IndexController {
           this.token1 = data.data.token
       })
       .catch(error => {
-        console.log("there was an error. Kindly visit Administrator");
+        alertify.alert("there was an error. Kindly visit Administrator");
       });
 
   }
