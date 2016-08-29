@@ -1,4 +1,4 @@
-<div class="container" ng-if="index.documents.length">
+<div class="container">
   <md-content layout-padding>
     <div class="form-step-main reg_form">
       <div class="row">
@@ -205,13 +205,6 @@
             <md-checkbox ng-model="index.contact.sms_optin" aria-label="2">
               Get a SMS
             </md-checkbox>
-            <div class="form_footer">
-              <div class="footer_block">
-                <md-button class="md-raised " ng-click="index.contactDetails();">Submit</md-button>
-              </div>
-            </div>
-            <!--                        <button class="btn btn-success">Submit Address</button>-->
-          </form>
         </div>
       </div>
     </div>
@@ -221,6 +214,6 @@
 <div class="page_box" style="width:100%">
   <md-input-container>
     <button class="left btn-outline-in" ng-disabled="$isFirst()" ng-click="$previousStep();"><i class="fa fa-angle-left"></i> Previous </button>
-    <button class="right btn-outline-in" ng-disabled="$isLast()" ng-click="$nextStep();"> Next <i class="fa fa-angle-right"></i> </button>
+    <button class="right btn-outline-in" ng-disabled="$isLast()" ng-click="$nextStep();index.contactDetails();"> Next <i class="fa fa-angle-right"></i> </button>
   </md-input-container>
 </div>
