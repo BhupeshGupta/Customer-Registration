@@ -119,3 +119,34 @@ canvas {
 #data input {
   display: none;
 }
+
+.file_upload {
+  margin: 20px 0;
+}
+
+.file_upload_input {
+  position: relative;
+  padding: 20px 0;
+}
+
+.file_upload_input input[type="text"] {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: inline-block;
+  width: 260px;
+  position: absolute;
+  background: #424242;
+  text-align: center;
+  font-family: monospace;
+}
+
+.file_upload_input input[type="File"] {
+  opacity: 0;
+  padding: 10px 0;
+}
+
+.forms_container_main h2 {
+  text-align: center;
+  font-family: monospace;
+  margin-bottom: 15px;
+}
