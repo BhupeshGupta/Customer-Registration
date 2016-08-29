@@ -1,12 +1,23 @@
+<script>
+  window.addEventListener("dragover", function(e) {
+    e = e || event;
+    e.preventDefault();
+  }, false);
+  window.addEventListener("drop", function(e) {
+    e = e || event;
+    e.preventDefault();
+  }, false);
+</script>
 <div class="row forms_step">
   <div class="continer">
     <div class="form_container step1">
       <div class="forms_container_main">
         <div class="col-lg-{{12/index.documents.length}}" ng-repeat="x in index.documents">
-          <div nv-file-drop="" uploader="index.uploader" options="{ url: 'http://localhost:9005/upload', formData: [index.{{x}}_Details], onSuccess: index.response}">
+          <div nv-file-drop="" uploader="index.uploader" options="{ url: 'http://localhost:9006/upload', formData: [index.{{x}}_Details], onSuccess: index.response}" filters="size,ext">
             <div nv-file-over="" uploader="index.uploader" over-class="another-file-over-class" class="well my-drop-zone">
               Drag and Drop {{x}} files Here
             </div>
+            <input type="file" nv-file-select uploader="index.uploader" options="{ url: 'http://localhost:9006/upload', formData: [index.{{x}}_Details], onSuccess: index.response}" filters="size,ext" multiple/>
           </div>
         </div>
         <div class="main_head_tab">

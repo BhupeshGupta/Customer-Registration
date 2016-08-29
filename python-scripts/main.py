@@ -46,13 +46,6 @@ try:
           'msg': r.text
       }
 
-
-
-
-
-
-
-
     def enable_cors(fn):
         def _enable_cors(*args, **kwargs):
             # set CORS headers
@@ -146,7 +139,7 @@ try:
         name, ext = os.path.splitext(upload.filename)
         if ext not in ('.png', '.jpg', '.jpeg'):
             return 'File extension not allowed.'
-        image_path = "/home/hackerx/Documents/docs/{}{}".format(uuid.uuid4(),ext)
+        image_path = "/tmp/{}{}".format(uuid.uuid4(),ext)
         upload.save(image_path ,overwrite=True)
         return {
             "image_path" : image_path,
@@ -174,10 +167,6 @@ try:
             return json.dumps(q)
         else:
             return "nothing found in the database"
-
-
-
-
 
     @route('/download_doc', method=['OPTIONS', 'GET','POST'])
     @enable_cors
