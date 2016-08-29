@@ -4,6 +4,10 @@ var step2 = require("./form/step1.html");
 var step3 = require("./form/step3.html");
 var step4 = require("./form/step4.html");
 var $ = require("jquery");
+var alertify = require('alertify.js');
+
+
+
 
 export default class IndexController {
 
@@ -94,7 +98,7 @@ export default class IndexController {
       "excise_division_code": "",
     }
 
-    this.contact = {
+    this.customerContact = {
       "first_name": "",
       "last_name": "",
       "phone": "",
@@ -102,6 +106,27 @@ export default class IndexController {
       "sms_optin": "",
       "customer": ""
     }
+
+    this.uploader.filters.push({
+      name: 'size',
+      fn: function(item) {
+        if (item.size < 5245329)
+          return true;
+        else
+          alertify.alert("Kindly Select a Image less than 5 Mb");
+      }
+    });
+    this.uploader.filters.push({
+      name: 'ext',
+      fn: function(item) {
+        if (item.type.split("/").indexOf("image") <= -1)
+          alertify.alert("kindly uoload a image with proper extension");
+        else
+          return true;
+      }
+
+    });
+
 
   }
 
@@ -112,7 +137,7 @@ export default class IndexController {
         console.log("Pan is entered");
         this.token = data.data.token,
           vm.captcha_path = this.settings.pythonServerUrl() + '/captcha/' + data.data.captcha_path;
-          console.log(vm.captcha_path)
+        console.log(vm.captcha_path)
       })
       .catch(error => {
         alert("there was an error. Kindly visit Administrator");
@@ -167,7 +192,9 @@ export default class IndexController {
           this.pan_Details.number = pan;
         }
       })
-      .catch(error => {console.log(error);});
+      .catch(error => {
+        console.log(error);
+      });
   }
 
 
@@ -223,17 +250,17 @@ export default class IndexController {
       'data': {
         'customerData': this.customerData,
         'customerAddressData': this.customerAddressData,
-        'customerContact': this.contact
+        'customerContact': this.customerContact
       }
     });
     $('<form>', {
-        "action": this.settings.pythonServerUrl() + '/download_doc',
-        "method": 'post',
-        "id": 'data'
-      }).append($('<input />', {
-        "name": 'data',
-        "value": this.data
-      })).appendTo(document.body).submit();
+      "action": this.settings.pythonServerUrl() + '/download_doc',
+      "method": 'post',
+      "id": 'data'
+    }).append($('<input />', {
+      "name": 'data',
+      "value": this.data
+    })).appendTo(document.body).submit();
     this.$http.post(this.settings.pythonServerUrl() + '/submit', {
       'data': this.full_data
     })
@@ -253,8 +280,8 @@ export default class IndexController {
       this.customerData.pan_number = this.pan_Details.number;
     if (this.documents.indexOf("service_tax") >= 0)
       this.customerData.service_tax_number = this.service_tax_Details.number;
-        console.log(this.customerData);
-    }
+    console.log(this.customerData);
+  }
 
 
   contactDetails() {
