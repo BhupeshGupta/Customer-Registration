@@ -10,8 +10,6 @@ var alertify = require('alertify.js');
 export default class IndexController {
 
   constructor($http, settings, FileUploader) {
-    this.istin = false;
-    this.notin = false;
     this.ispan = false;
     this.$http = $http;
     this.stage = 0;
@@ -201,6 +199,7 @@ export default class IndexController {
 
     }).then(data => {
       this.Details = data.data;
+      console.log(this.Details);
       if (this.Details.excise) {
         this.excise_Details = this.Details.excise;
         this.excise_Details.image_path = [];
@@ -239,7 +238,7 @@ export default class IndexController {
     this.full_data.excise = this.excise_Details;
     this.full_data.customerData = this.customerData;
     this.full_data.customerAddressData = this.customerAddressData;
-    this.full_data.customerContact = this.contact;
+    this.full_data.customerContact = this.customerContact;
     this.data = JSON.stringify({
       'data': {
         'customerData': this.customerData,
@@ -279,20 +278,19 @@ export default class IndexController {
 
 
   contactDetails() {
-    if (this.contact.sms_optin == true)
-      this.contact.sms_optin = "1";
-    if (this.contact.sms_optin == false)
-      this.contact.sms_optin = "0";
+    console.log(this.customerContact);
+    if (this.customerContact.sms_optin == true)
+      this.customerContact.sms_optin = "1";
+    if (this.customerContact.sms_optin == false)
+      this.customerContact.sms_optin = "0";
     if (this.customerAddressData.is_primary_address == true)
-      this.contact.is_primary_address = "1";
+      this.customerAddressData.is_primary_address = "1";
     if (this.customerAddressData.is_primary_address == false)
-      this.contact.is_primary_address = "0";
+      this.customerAddressData.is_primary_address = "0";
     if (this.customerAddressData.is_shipping_address == true)
-      this.contact.sms_optin = "1";
+      this.customerAddressData.is_shipping_address = "1";
     if (this.customerAddressData.is_shipping_address == false)
-      this.contact.sms_optin = "0";
-
+      this.customerAddressData.is_shipping_address = "0";
   }
-
 
 }

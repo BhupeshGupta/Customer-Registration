@@ -1,3 +1,5 @@
+<!-- This page is for customer Registration form  -->
+
 <div class="container">
   <md-content layout-padding>
     <div class="form-step-main reg_form">
@@ -85,7 +87,7 @@
               </div>
             </div>
 
-            <h3> Contact Information" </h3>
+            <h3> Address Information" </h3>
             <div layout-gt-sm="row">
               <!-- Address -->
               <md-input-container class="md-block" flex-gt-sm>
@@ -176,33 +178,33 @@
               Preferred Shipping Address
             </md-checkbox>
 
-            <h3>Contact Ination</h3>
+            <h3>Contact Information</h3>
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                 <label></label>
-                <input placeholder="First Namec *" name="name" ng-model="index.contact.first_name">
+                <input placeholder="First Name*" name="name" ng-model="index.customerContact.first_name">
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                 <label></label>
-                <input name="name" ng-model="index.contact.last_name" placeholder="Last Name">
+                <input name="name" ng-model="index.customerContact.last_name" placeholder="Last Name">
               </md-input-container>
             </div>
 
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                 <label></label>
-                <input name="name" ng-model="index.contact.phone" placeholder="Phone">
+                <input name="name" ng-model="index.customerContact.phone" placeholder="Phone">
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                 <label></label>
-                <input name="Email" ng-model="index.contact.email_id" placeholder="Email:xyz@gmail.com" ng-pattern="/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/">
+                <input name="Email" ng-model="index.customerContact.email_id" placeholder="Email:xyz@gmail.com" ng-pattern="/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/">
                 <div ng-messages="userForm.Email.$error" role="alert">
                   <div ng-message="pattern" class="my-message">That doesn't look like a valid Email Address.
                   </div>
                 </div>
               </md-input-container>
             </div>
-            <md-checkbox ng-model="index.contact.sms_optin" aria-label="2">
+            <md-checkbox ng-model="index.customerContact.sms_optin" aria-label="2">
               Get a SMS
             </md-checkbox>
         </div>

@@ -13,10 +13,10 @@
               </md-input-container>
               <md-input-container class="md-block">
                 <label></label>
-                <input ng-model="excise_number" placeholder="Enter Your Excise Number">
+                <input ng-model="excise_number" ng-disabled="!(index.documents.indexOf('tin')>=0)" placeholder="Enter Your Excise Number">
               </md-input-container>
             </div>
-            <table class="table" ng-show="index.documents.indexOf('excise_Details')>=0">
+            <table class="table" ng-show="index.documents.indexOf('excise')>=0">
               <tbody>
                 <tr ng-repeat="(key,value) in index.excise_Details">
                   <td>{{key}}</td>
@@ -40,7 +40,7 @@
                 </md-input-container>
               </div>
             </div>
-            <table class="table" ng-show="index.documents.indexOf('service_tax_Details')>=0">
+            <table class="table" ng-show="index.documents.indexOf('service_tax')>=0">
               <tbody>
                 <tr ng-repeat="(key,value) in index.service_tax_Details">
                   <td>{{key}}</td>
@@ -54,7 +54,7 @@
           <div class="footer_block">
             <div class="form_footer">
               <div class="footer_block">
-                <md-button class="md-raised" ng-click="index.getTin(tin)" ng-disabled="index.tin">Submit</md-button>
+                <md-button class="md-raised" ng-click="index.getExcise(excise_number, captcha, serviceTax)">Submit</md-button>
               </div>
             </div>
           </div>
