@@ -1,6 +1,6 @@
 var step = require("./form/step.html");
-var step1 = require("./form/step2.html");
-var step2 = require("./form/step1.html");
+var step1 = require("./form/step1.html");
+var step2 = require("./form/step2.html");
 var step3 = require("./form/step3.html");
 var step4 = require("./form/step4.html");
 var $ = require("jquery");
@@ -122,10 +122,7 @@ export default class IndexController {
         else
           return true;
       }
-
     });
-
-
   }
 
   getCaptcha() {
@@ -148,7 +145,6 @@ export default class IndexController {
       .catch(error => {
         alertify.alert("there was an error. Kindly visit Administrator");
       });
-
   }
 
   getTin(tin) {
@@ -168,7 +164,7 @@ export default class IndexController {
         }
       })
       .catch(error => {
-        alert("call the admin");
+        alertify.alert("call the admin");
       });
   }
 
