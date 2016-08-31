@@ -2,37 +2,38 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Webpack App</title>
-    <link href="_assets/main.css" rel="stylesheet">
-<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">s-->
+  <meta charset="UTF-8">
+  <title>Customer Registration</title>
+  <link href="_assets/main.css" rel="stylesheet">
+  <!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">s-->
 </head>
 
 <body>
-
+  <div id="main_div">
     <nav class="navbar navbar-default  tabs-style-linetriangle ">
-        <div ng-cloak>
-            <md-content>
-                <div class="customer_reg_heading">
-                    <h4>New customer registration form</h4>
-                </div>
-                <md-tabs md-border-bottom md-dynamic-height>
-                    <md-tab label="Registration">
-                        <md-content class="md-padding">
-                            <customer></customer>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Approval">
-                        <md-content class="md-padding">
-                            <approver></approver>
-                        </md-content>
-                    </md-tab>
-                </md-tabs>
-            </md-content>
-        </div>
+      <div ng-cloak>
+        <md-content>
+          <div class="customer_reg_heading">
+            <h4>New customer registration form</h4>
+          </div>
+          <md-tabs md-border-bottom md-dynamic-height>
+            <md-tab label="Registration">
+              <md-content class="md-padding">
+                <customer></customer>
+              </md-content>
+            </md-tab>
+            <md-tab label="Approval">
+              <md-content class="md-padding">
+                <approver></approver>
+              </md-content>
+            </md-tab>
+          </md-tabs>
+        </md-content>
+      </div>
     </nav>
+  </div>
 
-    <script src="_assets/main.js"></script>
+  <script src="_assets/main.js"></script>
 </body>
 
 </html>

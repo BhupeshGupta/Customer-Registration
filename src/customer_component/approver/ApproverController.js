@@ -1,3 +1,5 @@
+var alertify = require('alertify.js');
+
 export default class ApproverController {
 
   constructor($cookies, $http, settings, $localStorage) {
@@ -37,19 +39,19 @@ export default class ApproverController {
     })
   }
 
-  approve(key, individualData) {
+  approve(individualData) {
     console.log(individualData);
     this.$http.post(this.settings.pythonServerUrl() + '/create_customer_aprover', {
         'sid': this.sid,
         'data': individualData
       }).then(data => {
         if (data.data['status_code'] != 200) {
-          console.log("AN ERROR HAS OCCURED");
-          console.log(data.data['msg']);
+          alertify.alert("AN ERROR HAS OCCURED");
+          alertify.alert(data.data['msg']);
         }
       })
       .catch(error => {
-        console.log(error);
+        alertify.alert(error);
       })
 
   }
