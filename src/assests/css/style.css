@@ -8,6 +8,27 @@ html {
   background-size: cover;
 }
 
+md-input-container.md-default-theme .md-input::-moz-placeholder,
+md-input-container .md-input::-moz-placeholder {
+  color: #222;
+}
+
+md-input-focused input {
+  border-color: none !important;
+  color: #222;
+}
+
+input:focus {
+  color: #000 !important;
+  border: 1px solid #f00 !important;
+}
+
+input:focus {
+  outline: none !important;
+  border-color: #719ECE;
+  box-shadow: 0 0 10px #ccc;
+}
+
 body {
   background: none;
 }
@@ -117,36 +138,17 @@ body nav.navbar md-input-container md-select {
   padding: 0 20px;
   overflow: hidden;
   border: none;
-  border-radius: 5px;
-  font: open sans;
-  color: rgba(140, 140, 140, 1);
+  border-radius: 0;
+  font-family: open sans;
   text-decoration: normal;
   background: #fff;
   margin: 0;
   padding: 0 10px;
   width: 100%;
   transition: all 502ms cubic-bezier(0.68, -0.75, 0.265, 1.75);
-  font-size: 14px;
-  color: #424242;
-  border: 1px solid #ddd !important;
-}
-
-md-input-focused input {
-  border-color: none !important;
-}
-
-input:-moz-placeholder {
-  /* Firefox 18- */
-  color: #7b6f70 !important;
-}
-
-input::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #7b6f70 !important;
-}
-
-input:-ms-input-placeholder {
-  color: #7b6f70 !important;
+  font-size: 15px;
+  color: #222;
+  border: 1px solid #999 !important;
 }
 
 md-select.md-default-theme ._md-select-value,
@@ -287,7 +289,6 @@ md-tab-item.md-active {
 md-content.md-no-momentum {
   border: 1px solid #efefef;
   margin: 0px;
-  background: #fcfafa;
   height: 100%;
 }
 
@@ -827,4 +828,16 @@ input[type=number] {
 input[type="number"]:hover,
 input[type="number"]:focus {
   -moz-appearance: number-input;
+}
+
+.form-step h3:after {
+  border: 1px solid red;
+  border-left: 0;
+  border-right: 0;
+  height: 3px;
+}
+
+button[disabled="disabled"] {
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
 }
