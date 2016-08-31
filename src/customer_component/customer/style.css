@@ -33,7 +33,8 @@
   color: dodgerblue;
 }
 
-.inputdemoIcons md-input-container.md-input-invalid> md-icon.email, .inputdemoIcons md-input-container.md-input-invalid> md-icon.name {
+.inputdemoIcons md-input-container.md-input-invalid> md-icon.email,
+.inputdemoIcons md-input-container.md-input-invalid> md-icon.name {
   color: red;
 }
 
@@ -149,4 +150,8 @@ canvas {
   text-align: center;
   font-family: monospace;
   margin-bottom: 15px;
+}
+
+md-content {
+  overflow-y: hidden !important;
 }
