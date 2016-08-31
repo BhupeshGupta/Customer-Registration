@@ -40,7 +40,7 @@ export default class IndexController {
         abbrev: state
       };
     });
-    this.country = ('India1,India2,India3,India4,India5,India').split(',').map(function(state) {
+    this.country = ('India').split(',').map(function(state) {
       return {
         abbrev: state
       };

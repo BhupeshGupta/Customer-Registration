@@ -152,6 +152,7 @@ try:
     def submit():
         json_request = request.json
         data = json_request.get('data')
+        print data
         connection.lpush('customer_data', str(data))
         return
 
@@ -181,9 +182,9 @@ try:
         data = json.dumps(data)
         r = requests.post(config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.serve_html', data={'data': data})
         if (r.status_code == 409):
-            print "user exists"
+            return "user exists"
         elif (r.status_code == 502):
-            print "down"
+            return "ERP Machine Down"
         else:
             body = r.text
             return bottle.HTTPResponse(body=body,
@@ -202,35 +203,34 @@ try:
     @route('/create_customer_aprover', method=['OPTIONS', 'GET', 'POST'])
     @enable_cors
     def approve():
-      if request.method == 'OPTIONS':
-        return {}
-      json_request = request.json
-      data = json_request.get('data')
-      sid = json_request.get('sid')
-      print sid
-      customer_creation_data = json.dumps({
-        'customerData': data['customerData'],
-        'customerAddressData': data['customerAddressData'],
-        'customerContact': data['customerContact']
-      })
-      r = requests.post(
-        config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.approve',
-        data={'data': customer_creation_data,'sid':sid})
-      if (r.status_code != 200):
-          return {
-              'status_code': r.status_code,
-              'msg': r.text
-          }
-      print r.status_code
-      if (r.status_code == 200):
-          response = r.json()
-          primary = response['message']
-          for (key) in data:
-              if key in ['tin', 'pan', 'excise', 'service_tax']:
-                  upload_file_data = push_in_alfresco(data[key])
-                  response = attach_in_erp(sid, primary, upload_file_data['fileName'], upload_file_data['nodeRef'])
-                  return response
-
+        if request.method == 'OPTIONS':
+            return {}
+        json_request = request.json
+        data =  json_request.get('data')
+        sid = json_request.get('sid')
+        customer_creation_data = json.dumps({
+            'customerData': data['customerData'],
+            'customerAddressData': data['customerAddressData'],
+            'customerContact': data['customerContact']
+        })
+        r = requests.post(
+            config['erpServerUrl'] + '/api/method/flows.flows.controller.customer_creation.approve',
+            data={'data': customer_creation_data, 'sid': sid})
+        if (r.status_code != 200):
+            return {
+                'status_code': r.status_code,
+                'msg': r.text
+            }
+        print r.status_code
+        if (r.status_code == 200):
+            response = r.json()
+            primary = response['message']
+            for key in data:
+                if key in ['tin', 'pan', 'excise', 'service_tax']:
+                    upload_file_data = push_in_alfresco(data[key])
+                    response = attach_in_erp(sid, primary, upload_file_data['fileName'], upload_file_data['nodeRef'])
+                    print response
+        return "everything successfull"
 
 
 
