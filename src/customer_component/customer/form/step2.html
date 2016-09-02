@@ -1,5 +1,4 @@
 <!-- This page is for customer Registration form  -->
-
 <div class="container">
   <md-content layout-padding>
     <div class="form-step-main reg_form">
@@ -7,7 +6,7 @@
         <div class="form_container step1 ">
           <form name="userForm">
             <!-- Form Start -->
-            <h3>Basic Information</h3>
+            <h2>Basic Information</h2>
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                 <label></label>
@@ -24,8 +23,7 @@
                 </md-input-container>
               </md-input-container>
             </div>
-
-            <h3>Registration Numbers</h3>
+            <h2>Registration Numbers</h2>
             <div layout-gt-sm="row">
               <div ng-if="index.pan_Details">
                 <md-input-container class="md-block" flex-gt-sm>
@@ -38,11 +36,10 @@
                   <label></label>
                   <input ng-model="index.customerData.tin_number" placeholder="Tin Number">
                 </md-input-container>
+                <!--              </div>-->
               </div>
-            </div>
-
-            <div layout-gt-sm="row" ng-if="index.service_tax_Details">
-              <md-input-container class="md-block" flex-gt-sm>
+              <!--            <div layout-gt-sm="row" ng-if="index.service_tax_Details">-->
+              <div layout-gt-sm="row">
                 <md-input-container class="md-block" flex-gt-sm>
                   <label></label>
                   <md-select ng-model="index.customerData.service_tax_liability" placeholder="Type">
@@ -51,14 +48,13 @@
                     </md-option>
                   </md-select>
                 </md-input-container>
-              </md-input-container>
-              <!-- Service Tax -->
-              <md-input-container class="md-block" flex-gt-sm>
-                <label></label>
-                <input ng-model="index.customerData.service_tax_number" placeholder="service Tax Number">
-              </md-input-container>
+                <!-- Service Tax -->
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label></label>
+                  <input ng-model="index.customerData.service_tax_number" placeholder="service Tax Number">
+                </md-input-container>
+              </div>
             </div>
-
             <div ng-if="index.excise_Details">
               <h3> Ecc details</h3>
               <div layout-gt-sm="row">
@@ -86,8 +82,7 @@
                 </md-input-container>
               </div>
             </div>
-
-            <h3> Address Information" </h3>
+            <h2> Address Information" </h2>
             <div layout-gt-sm="row">
               <!-- Address -->
               <md-input-container class="md-block" flex-gt-sm>
@@ -107,7 +102,6 @@
                 </md-input-container>
               </md-input-container>
             </div>
-
             <!-- Address line 1 and line 2 -->
             <md-input-container class="md-block">
               <label></label>
@@ -116,7 +110,6 @@
             <md-input-container md-no-float class="md-block">
               <input ng-model="index.customerAddressData.address_line2" placeholder="Address Line 2">
             </md-input-container>
-
             <!-- City State and Pincode -->
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
@@ -178,7 +171,7 @@
               Preferred Shipping Address
             </md-checkbox>
 
-            <h3>Contact Information</h3>
+            <h2>Contact Information</h2>
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                 <label></label>
@@ -207,6 +200,7 @@
             <md-checkbox ng-model="index.customerContact.sms_optin" aria-label="2">
               Get a SMS
             </md-checkbox>
+          </form>
         </div>
       </div>
     </div>
