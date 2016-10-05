@@ -11,7 +11,7 @@ import 'angular-file-upload/dist/angular-file-upload.js';
 import SettingService from './services/SettingsService';
 import './services/directives/thumb.js';
 import 'ngstorage/ngStorage.js';
-
+import 'angular-svg-round-progressbar/build/roundProgress.js';
 
 
 export default angular
